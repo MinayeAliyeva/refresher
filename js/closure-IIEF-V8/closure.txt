@@ -1,0 +1,28 @@
+Closure - function daxilində təyin olunan inner function-ın outher function-ın dəyişənlərinə kənardan access-i olması hadisəsidir.
+Əsasən functional programming languages-ə xas olan konseptdir.
+
+Bir çox dillərdən bildiyimiz kimi normal olaraq hər function işə düşəndə memory-də function daxilində declare olunan dəyişənlər yaradılır və function işini bitirdikdən sonra həmin dəyişənlər avtomatik memory-dən silinir.
+Closure istifade edərək bu dəyişənlərin memory-dən silinməsinin qarşısını almış oluruq.
+Yəni,Closure işlətmək zəruri olmadıqca işlətmək lazım deyil.Çunki, həm script-in performansına,həm də mənasız yaddaş itkisinə səbəb olur.
+Call Stack - çagrılan funksiyaları saxlayır və işlənmə ardıcılıgını manage edir.
+“Invoked functions” - ın məlumatlarını saxlayır.
+“LIFO ”konsepti ilə işləyir(Last In First Out),yəni Call Stack-ə sonuncu daxil olan function birinci execute olur.
+JS “Single Thread” olduğu üçün eyni zaman kəsimində yalnız bir funksiya aktiv olur.Yəni,functions ardıcıl işə düşür paralel yox.
+
+Əlavə edilən hər element “Stack Frame” adlanır. Error baş verərkən ya da Debug edərkən istifadə etdiyimiz Stack-trace-lər hamsı Call Stack-dən gəlir.
+Invoked funksiya, sadəcə çağırılmış və ya icra edilmiş funksiya deməkdir.
+Call Stack ilə Stack fərqli anlayışlardır. Stack - Data Structure-dir, Call-Stack yalnız Invoked functions haqqında məlumatları saxlayır.
+Heep Memory - Elan edilən functions və variables burda saxlanılır.
+Note: Elan edilen functions Heep Memory-de saxlanılır və əgər onlar invoke edilərsə Call Stack-ə düşür.
+Event Loop - JS engine-in ən vacib hissəsidir. Bütün functions-ı handle edən sonsuz dövrdür.
+Sync functions-ı Call Stack-ə əlavə edir
+Async functions(ajax, callbacks…)-ı Callback Queue-ə əlavə edir.
+Callback Queue-ə əlavə olunan functions-ı Call Stack boşaldıqda Call Stack-ə göndərir və işə salır.
+Callback Queue - Async functions-ın Event loop tərəfindən gözlədildiyi yerdir. (callbacks, Ajax, etc…)
+async functions çağrılanda aşağıdakı mərhələlərdən keçir:
+
+İlk öncə async functions Callback Queue-ə düşür
+daha sonra Event Loop Call Stack-in boş olub olmamasını yoxlayır.
+Əgər Call Stack-də icra ediləcək function qalmayıbsa ardıcıl şəkildə Callback Queue-dəki functionları Call Stack-ə daşıyır və işə salır.
+main()-JavaScript proqramınızın işləməyə başladığı əsas (root) səviyyədir.
+Code execute olunanda sync functions “Call Stack”-ə, async functions isə “Callback Queue”-ə düşür.

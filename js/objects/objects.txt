@@ -1,0 +1,185 @@
+JavaScript-də obyektlər dinamik verilənlər strukturlarıdır və müxtəlif üsullarla yaradıla bilər. Hər bir obyekt açar (key) və dəyər (value) cütlərindən ibarətdir. Gəlin, obyektlərin yaranma üsullarını təhlil edək.
+Yaranma usullari :
+
+1.Object Literal
+Xüsusiyyətlər:
+Obyekt daxilindəki açarlar string formatındadır.
+Metodlar birbaşa daxilində müəyyən edilə bilər.
+Ən çox istifadə olunan üsuldur.
+
+2. Object Konstruktorundan İstifadə
+const person = new Object();
+person.name = "Aygün";
+person.age = 25;
+person.greet = function () {
+  console.log("Salam!");
+}
+Bu üsulda əvvəlcə boş obyekt yaradılır, sonra isə xassələr bir-bir əlavə olunur.
+Object konstruktordan istifadə edərək boş obyekt yaradıla bilər, sonra isə dinamik olaraq xassələr əlavə olunur.
+
+3. Object.create() Metodu
+Bu metodla bir obyekt digər obyektin prototipindən istifadə edərək yaradıla bilər.
+const proto = {
+  greet: function () {
+    console.log(`Salam, mənim adım ${this.name}.`);
+  },
+};
+
+const person = Object.create(proto);
+person.name = "Aygün";
+person.greet(); // Salam, mənim adım Aygün.
+Object.create() başqa bir obyekti prototip kimi təyin edir. Burada proto obyekti person üçün prototip kimi istifadə olunub.
+
+4. Funksiya Konstruktorlarından İstifadə
+Funksiya konstruktorları ES6-dan əvvəl obyekt yaratmaq üçün geniş istifadə olunurdu.
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.greet = function () {
+    console.log(`Salam, mənim adım ${this.name}.`);
+  };
+}
+
+const person = new Person("Aygün", 25);
+
+
+person.greet(); // Salam, mənim adım Aygün.
+Person adlanan konstruktor funksiyası yaradılıb. new operatorundan istifadə edərək bu funksiyadan yeni obyektlər yaradılır.
+5.ES6 Sinifləri ilə Yaradılma
+ES6 sinifləri (classes) obyekt yaratmaq üçün müasir və daha oxunaqlı bir üsuldur.
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  greet() {
+    console.log(`Salam, mənim adım ${this.name}.`);
+  }
+}
+
+const person = new Person("Aygün", 25);
+person.greet(); // Salam, mənim adım Aygün.
+Xülasə: Hansı Üsuldan İstifadə Etməliyik?
+Sadə və statik obyektlər üçün: Obyekt literalları ən yaxşı seçimdir.
+Dinamik obyektlər üçün: Object konstruktoru və ya Object.create() metodundan istifadə edə bilərsiniz.
+Mürəkkəb obyektlər üçün: Funksiya konstruktorları və ES6 sinifləri üstünlük təşkil edir.
+Müasir tətbiqlər üçün: ES6 siniflərindən istifadə tövsiyə olunur, çünki daha oxunaqlı və güclüdür.
+6. Object.assign() ilə
+Mövcud obyektlərdən yeni obyektlər yaratmaq üçün istifadə olunur.
+
+const obj1 = { a: 1 };
+const obj2 = { b: 2 };
+const mergedObj = Object.assign({}, obj1, obj2);
+
+console.log(mergedObj); // { a: 1, b: 2 }
+7. Spread Operator (...) ilə
+const obj1 = { a: 1 };
+const obj2 = { b: 2 };
+const mergedObj = { ...obj1, ...obj2 };
+
+console.log(mergedObj); // { a: 1, b: 2 }
+
+JavaScript-də obyekt yaratmağın bir neçə müxtəlif üsulu mövcuddur. Aşağıda bütün məşhur üsulları və onların istifadəsini izah edirəm, həmçinin Map və Set obyektləri üçün də nümunələr əlavə edirəm.
+
+1. Literals ilə ({})
+Ən sadə və yayğın üsuldur. Məlumat cütlərini birbaşa təyin edərək obyekt yaradırsınız.
+
+Misal:
+
+javascript
+Kodu kopyala
+const obj = {
+  key: "value",
+  name: "John",
+};
+console.log(obj); // { key: "value", name: "John" }
+2. Object Konstruktoru ilə
+Object konstruktordan istifadə edərək boş bir obyekt yarada bilərsiniz.
+
+Misal:
+
+javascript
+Kodu kopyala
+const obj = new Object();
+obj.key = "value";
+console.log(obj); // { key: "value" }
+3. Object.create() ilə
+Başqa bir obyektin prototipindən obyekt yaratmaq üçün istifadə olunur.
+
+Misal:
+
+javascript
+Kodu kopyala
+const proto = { greet: "Hello" };
+const obj = Object.create(proto);
+
+console.log(obj.greet); // "Hello"
+console.log(Object.getPrototypeOf(obj) === proto); // true
+4. Funksiya Konstruktoru ilə
+Obyekt yaradarkən özəl funksiyalar (konstruktorlar) təyin etmək mümkündür.
+
+Misal:
+
+javascript
+Kodu kopyala
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+const john = new Person("John", 25);
+
+console.log(john); // Person { name: "John", age: 25 }
+5. Class (Siniflər) ilə
+class sintaksisi ES6 ilə gəlib və obyekt yaradarkən daha müasir üsuldur.
+
+Misal:
+
+javascript
+Kodu kopyala
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+}
+const dog = new Animal("Dog");
+console.log(dog); // Animal { name: "Dog" }
+6. Object.assign() ilə
+Mövcud obyektlərdən yeni obyektlər yaratmaq üçün istifadə olunur.
+
+Misal:
+
+javascript
+Kodu kopyala
+const obj1 = { a: 1 };
+const obj2 = { b: 2 };
+const mergedObj = Object.assign({}, obj1, obj2);
+
+console.log(mergedObj); // { a: 1, b: 2 }
+7. Spread Operator (...) ilə
+ES6-dan bəri obyektlərin kopyalanması və birləşdirilməsi üçün istifadə olunur.
+
+Misal:
+
+javascript
+Kodu kopyala
+const obj1 = { a: 1 };
+const obj2 = { b: 2 };
+const mergedObj = { ...obj1, ...obj2 };
+
+console.log(mergedObj); // { a: 1, b: 2 }
+8. Map ilə
+Map, obyektə bənzər bir məlumat quruluşudur, lakin key dəyərləri təkcə string deyil, hər hansı bir tip ola bilər.
+const map = new Map();
+map.set("name", "John");
+map.set(1, "One");
+9. Set ilə
+Set unikal dəyərləri saxlayan xüsusi bir məlumat quruluşudur.
+const set = new Set();
+set.add(1);
+set.add(2);
+set.add(2); // Təkrar olan dəyər əlavə olunmur
+
+console.log(set); // Set(2) { 1, 2 }
+console.log(set.has(1)); // true
+

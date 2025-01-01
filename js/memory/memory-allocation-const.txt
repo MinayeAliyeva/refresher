@@ -1,0 +1,9 @@
+Memory Allocation (Yaddaşın Ayrılması):
+Const keyword
+
+Bildiyimiz kimi const ilə declare olunan variable-a 2-ci dəfə yeni qiymət yazmaq olmur.
+
+Amma əgər variable Non-Primitive type-dadırsa Immutable data sayılmır və ona görə də onun value-sunun item və ya propertisini dəyişə bilirik.
+Primitive data type-dakı dəyişənlər immutable datalar sayılır çünki, onlar tamamən stack-də saxlanılır.
+Əgər biz dəyişəni const ilə declare etsək Static yaddaş olan Stack-də bu dəyişənə aid yeni bir sətir düşməsinin qarşısını almış oluruq.
+Amma Non-Primitive type-da dəyişən yaratsaq onun value-su Dinamik yaddaş olan Heap-ə düşdüyü üçün onun value-su daxilində dəyisiklik etmək olur.

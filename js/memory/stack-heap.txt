@@ -1,0 +1,75 @@
+
+Stack-Data-ları Ram-da Linear data structuru ilə saxlayan limitli yaddaş sahəsidir.
+LIFO(Last In First Out) konsepti ilə işləyir.Yəni, Stack-ə ən son yazılan data ən birinci silinir.
+Code icra edilən zaman :
+“Non-Primitive type” (Object,Array,Function,…)-da declare olunan dəyişənlərin Ad və Address-ləri Stack , Value və Address-ləri isə Heap yaddaşda saxlanılır.
+
+
+Heap Memory
+Data-ları Hierarchical data structuru ilə saxlayan limitsiz yaddaş sahəsidir.
+Non-primitive type-da declare olunan variable-ların value-sunu və address-ni özündə saxlayır.
+Yaddaş bölgüsü Stack-ə nisbətən çox çətindir
+
+Heap memory-ə yazılan hər bir data global sayılır və istənilən yerdən referans alına bilər.
+  let myArray = []
+Bu halda yaddaşda nə baş verdiyini anlamağa çalışaq:
+
+İlk əvvəl myArray üçün “Unique Identifier” yaradılır
+Runtime vaxtı dəyişənin adı və address-i Stack-də yerləşdirilir
+Həmin address-dəki dəyişənin value-su Heap-ə yazılır.
+Daha sonra Stack-dəki address Heap-ə kopyalanır.
+Unique Identifier - Dəyişənin yaddaşdakı yerini gostərən address-dir.
+const fn=()=>{
+    const p1=new Array([1,2])
+    if(true){
+        const p2=new Array([3,4])
+    }
+}
+ Aşağıdakı nümunədə if{} işləyib bitəndə stack-dəki p2 artıq silinmiş olur amma heap-dəki qarşılığı hələdə qalır.
+
+Və biz heap-dəki həmin data-nı stack-də qarşılığı olmadığı üçün yenidən işlədə bilməyəciyik.
+
+Çünki, bizim Heap-dəki hər hansı bir data-ya access-mizin olması üçün həmin data-nın Stack-dəki address-inə ehtiyyacımız var.
+Nəticə etibarı ilə Heap-də qalan istifadə edilməyən dəyişənlər bir muddət sonra gərəksiz Garbage(zibil)-ə çevriləcək.
+
+High level dillərdə Garbage Collector avtomatik olaraq müəyyən müddətdən bir Heap-dən address-ləri Stack-də olmayan data-ları tapıb silir.
+
+Low level( C,C++) dillərdə isə Garbage Collector olmadığına görə bunu proqramist manual edir.
+Primitive Tiplər
+Tərifi: Primitive tiplər JavaScript-də sadə, dəyişməz (immutable) məlumat tipləridir. Bunlara number, string, boolean, null, undefined, symbol, və bigint daxildir.
+Stack çox sürətli bir yaddaş sahəsidir və burada məlumatlar birbaşa dəyər kimi saxlanılır (referans olmadan).
+Kodu hər dəfə işlədəndə (npm start və ya başqa bir metodla), yeni primitive dəyişənlər yaddaşda yaranır və müəyyən bir yer tutur.
+Əgər kompüteri söndürsən, restart etsən və ya Visual Studio Code-u bağlasan, bu dəyərlər yaddaşdan silinir, çünki onlar yalnız cari proqramın işləmə müddətində mövcuddur.
+
+Sizin dediklərinizi daha geniş şəkildə izah edim:
+
+Primitive Tiplər
+Tərifi: Primitive tiplər JavaScript-də sadə, dəyişməz (immutable) məlumat tipləridir. Bunlara number, string, boolean, null, undefined, symbol, və bigint daxildir.
+Yaddaşda Saxlanılması:
+Primitive tiplər stack adlı yaddaş sahəsində saxlanır.
+Stack çox sürətli bir yaddaş sahəsidir və burada məlumatlar birbaşa dəyər kimi saxlanılır (referans olmadan).
+Kodu hər dəfə işlədəndə (npm start və ya başqa bir metodla), yeni primitive dəyişənlər yaddaşda yaranır və müəyyən bir yer tutur.
+Əgər kompüteri söndürsən, restart etsən və ya Visual Studio Code-u bağlasan, bu dəyərlər yaddaşdan silinir, çünki onlar yalnız cari proqramın işləmə müddətində mövcuddur.
+Object Tiplər
+Tərifi: Object-lər JavaScript-də kompleks məlumat strukturlarıdır və dəyişdirilə bilən (mutable) məlumatlardır. Məsələn, array-lər, funksiyalar və digər obyektlər.
+Yaddaşda Saxlanılması:
+Object tiplər heap adlı yaddaş sahəsində saxlanılır. Heap daha geniş yaddaş sahəsidir və daha yavaşdır.
+Object-lərin yaddaşda saxlanılması üçün bir referans (göstərici) yaradılır. Bu referanslar stackdə saxlanır, amma obyektin öz məlumatları heap-də yerləşir.
+Garbage Collection
+JavaScript avtomatik garbage collector (zibil yığan) ilə işləyir. Garbage collector, artıq istifadə olunmayan və heç bir referansı olmayan obyektləri tapıb heap-dən təmizləyir.
+Əgər bir object-in heç bir referansı yoxdursa, garbage collector onu müəyyən vaxtdan sonra təmizləyəcək.
+Əgər bir object-ə hələ də bir referans varsa (məsələn, bir dəyişəndə saxlanıbsa), bu object yaddaşda qalmağa davam edir.
+
+Lexical scoping
+
+Bir çox dillərdə scope anlayışı Local və Global olaraq ayrılsada JS-də bu anlayış biraz fərqlidir :
+
+Block scope - let , const : block daxilində declare olunur (if,for…).
+Function scope - var : function daxilinde declare olunur.
+Global scope - function-dan kənarda declare olunur.
+NOTE: JavaScript only hoists declarations, not initializations. Yəni,yalnız declare hissəsi ən yuxarı qalxır, qiyməti yox.
+Type of Data Structures → Stack “Linear”, Heap isə “Hierarchical ”data structure a malikdir.
+Speed → Stack Heap-dən daha sürətlidir
+Limit of Space Size → Stack OS-dan asılı olaraq müəyyən limit-ə malikdir amma Heap-də limit yoxdur.
+Memory Allocation → Stack-də datalar LIFO konsepti ilə yerləşdirilir, Heap-də isə random ardıcıllıqla.
+Main Issue → Stack-in əsas problemi Yaddaşın az olması,Heap-in isə yaddas bölgüsü-dür

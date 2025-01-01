@@ -1,0 +1,180 @@
+call, aply ve bind
+------------------
+call, apply, və bind JavaScript-də funksiya kontekstini dəyişdirmək və this-i əllə təyin etmək üçün istifadə olunan üç mühüm metodudur. 
+Bu metodlar, this-in dəyərini dəyişdirərək funksiyanı müəyyən bir obyektin kontekstində çağırmağa imkan verir. 
+Bu metodların hər biri oxşar məqsəd daşısa da, istifadə üsulları və funksionallıqları fərqlidir. Gəlin, bunları geniş şəkildə izah edək.
+
+call() metodu
+call() metodu, funksiyanı müəyyən bir obyektin kontekstində çağırmaq üçün istifadə olunur. 
+Bu metodla funksiyaya birbaşa this dəyəri təyin edilir. => func.call(thisArg, arg1, arg2, ...);
+thisArg: Funksiya çağırılarkən this dəyərinin olacağı obyekt. arg1, arg2, ...: Funksiyaya ötürüləcək arqumentlər.
+
+apply() metodu
+apply() metodu call()-a bənzərdir, amma bir fərqi var: apply() funksiyasına arqumentlər bir massiv (array) şəklində ötürülür.
+func.apply(thisArg, [arg1, arg2, ...]);
+thisArg: Funksiyaya tətbiq ediləcək this dəyəri.[arg1, arg2, ...]: Funksiyaya ötürüləcək arqumentlərin olduğu bir massiv.
+
+bind() metodu 
+call() və apply() kimi funksiyanı çağırmaq üçün istifadə olunur, amma bir fərqi var:
+bind() funksiyanı yeni bir funksiya olaraq qaytarır, lakin dərhal çağırılmır. Bu yeni funksiya sonradan çağırıldıqda, 
+həmin funksiya əvvəlcədən təyin olunmuş this dəyəri ilə işləyir
+
+const newFunc = func.bind(thisArg, arg1, arg2, ...);
+thisArg: Yeni funksiya üçün təyin ediləcək this dəyəri.
+[arg1, arg2, ...]: Funksiya ilə birlikdə təyin ediləcək başlanğıc arqumentlər.
+
+ex: function greet(greeting, punctuation, n=null) { console.log(`${greeting}, my name's ${this.name}${punctuation}`) }
+    const person = { name: "Foo"};
+
+    greet.call(person,"hi", "!");                                                    => hi my name's Foo !
+    greet.apply(person, ["hi", "!"]);                                                => hi my name's Foo !
+    const greetPerson = greet.bind(person, "hi", "!");   greetPerson()               => hi my name's Foo !
+    greetPerson("-");                                                                 => hi my name's Foo !-
+
+Suallar
+----------------------------------------------------------------------------------------------------------------------------
+
+1-call, apply, və bind arasındakı əsas fərqlər nələrdir? Hər birinin istifadəsi üçün bir nümunə verin.
+  call, apply və bind JavaScript-də funksiya kontekstini (this) idarə etmək üçün istifadə olunan metodlardır. 
+  Onların əsas fərqləri, funksiyanı necə çağırmaları və arqumentləri necə ötürmələrindədir.
+
+Metod	this kontekstini dəyişdirir	Arqument ötürmə	   Funksiyanı dərhal çağırır	       Qaytarılan dəyər
+call	 Bəli	                         Ayrı-ayrı	    Bəli	                        Funksiyanın 
+apply	 Bəli	                         Array kimi	    Bəli	                        Funksiyanın 
+bind	 Bəli	                         Ayrı-ayrı	    Xeyr (sonradan çağırılır)	        Yeni funksiya
+
+----------------------------------------------------------------------------------------------------------------------------
+
+2-call metodundan istifadə edərək bir funksiyanın this kontekstini necə dəyişə bilərsiniz?
+call metodundan istifadə edərək, bir funksiyanın this kontekstini dəyişmək mümkündür. 
+Bunun üçün call metodu birinci arqument olaraq istədiyiniz this dəyərini qəbul edir və funksiyanı həmin kontekst ilə icra edir.
+func.call(thisArg, arg1, arg2, ...);
+thisArg: Funksiyanın içərisindəki this kontekstini təyin etmək üçün istifadə olunur.
+arg1, arg2, ...: Funksiyaya ötürüləcək əlavə arqumentlərdir.
+---------------------------------------------------------------------
+const person1 = {
+  name: "Ali",
+  greet: function(age) {
+    console.log(`Salam, mən ${this.name} və ${age} yaşım var.`);
+  },
+};
+
+const person2 = {
+  name: "Aygün",
+};
+
+// `person1.greet` funksiyasını `person2` kontekstində çağırırıq
+person1.greet.call(person2, 25);
+
+-------------------------------------------------------------------
+globalThis.name = "Rəşad";
+
+function introduce() {
+  console.log(`Mənim adım ${this.name}.`);
+}
+
+const user = {
+  name: "Leyla",
+};
+
+// `this` kontekstini `user` obyektinə dəyişirik
+introduce.call(user);
+----------------------------------------------------------------------
+-Obyektlərin metodlarının təkrar istifadəsi
+const rectangle = {
+  width: 10,
+  height: 20,
+  area: function() {
+    return this.width * this.height;
+  },
+};
+
+const square = {
+  width: 15,
+  height: 15,
+};
+
+// `rectangle.area` metodunu `square` üçün istifadə edirik
+const squareArea = rectangle.area.call(square);
+
+console.log(`Kvadratın sahəsi: ${squareArea}`);
+----------------------------------------------------------------------
+call metodu funksiyanın this kontekstini dəyişmək üçün güclü bir vasitədir.
+Bu metoddan istifadə etməklə, bir obyektin funksiyasını digər obyekt üçün istifadə edə bilərsiniz.
+this kontekstini idarə etmək və istədiyiniz kontekstdə funksiyaları çağırmaq üçün xüsusilə faydalıdır.
+
+----------------------------------------------------------------------------------------------------------------------------
+3-bind metodunun əsas istifadəsi nədir? Onun hansı hallarda faydalı olduğunu izah edin.
+bind metodu, JavaScript-də bir funksiyanın this kontekstini təyin etmək üçün istifadə olunur. 
+Lakin, call və apply-dan fərqli olaraq, bind funksiyanı dərhal çağırmaz. Bunun əvəzinə, 
+həmin kontekstlə bağlı yeni bir funksiya yaradır və lazım olan vaxt çağırılmasına imkan verir. 
+Bu xüsusiyyət bind-i xüsusilə faydalı edir.
+
+bind metodunun əsas istifadəsi:
+	this kontekstini öncədən təyin etmək:
+	Funksiyanı bir obyektin kontekstinə bağlayaraq sonradan istifadə edə bilirsiniz.
+	Funksiyanı başqa kontekstlə paylaşmaq:
+	Bir obyektin metodunu başqa kontekstdə istifadəyə imkan verir.
+	Callback funksiyalarında this kontekstini saxlamaq:
+	Xüsusilə setTimeout, addEventListener və ya digər callback-lərdə this kontekstini itirməmək üçün.
+----------------------------------------------------------------------
+const person = {
+  name: "Aygün",
+  greet: function() {
+    console.log(`Salam, mənim adım ${this.name}.`);
+  },
+};
+
+const greetFunction = person.greet.bind(person);
+
+// İndi greetFunction hər zaman person obyektinə bağlıdır
+greetFunction(); // Salam, mənim adım Aygün.
+
+----------------------------------------------------------------------
+const car = {
+  brand: "Toyota",
+  getBrand: function() {
+    return this.brand;
+  },
+};
+
+const bike = {
+  brand: "Yamaha",
+};
+
+// `getBrand` funksiyasını bike obyektinə bağlayırıq
+const getBikeBrand = car.getBrand.bind(bike);
+
+console.log(getBikeBrand()); // Yamaha
+----------------------------------------------------------------------
+const user = {
+  name: "Rəşad",
+  greet: function() {
+    console.log(`Salam, mənim adım ${this.name}.`);
+  },
+};
+
+// setTimeout-da `this` konteksti itir
+setTimeout(user.greet, 1000); // Salam, mənim adım undefined.
+
+// `bind` ilə konteksti qoruyuruq
+setTimeout(user.greet.bind(user), 1000); // Salam, mənim adım Rəşad.
+----------------------------------------------------------------------
+
+Bind metodu nə vaxt faydalıdır?
+1. Callback funksiyalarında this problemini həll etmək:
+   Asinxron və ya gecikmiş çağırışlarda (setTimeout, addEventListener və s.) 
+   this konteksti dəyişə bilər. bind ilə bu problem həll olunur.
+2. Metodları təkrar istifadə etmək:
+   Obyektin bir metodunu başqa kontekstdə istifadə etmək üçün.
+3. Currying və ya funksiyaların təkrarlanması:
+   Funksiyanın müəyyən arqumentlərini əvvəldən təyin etmək və onu müxtəlif hallarda tətbiq etmək.
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,3 @@
+Immediately Invoked Function Expression - “IIFE”
+Ən sadə şəkildə izah etsək function-ın dərhal invoke olunmasını təmin edən JS konseptidir.
+syntaxsis ==> (function(){})()

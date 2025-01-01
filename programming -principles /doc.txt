@@ -1,0 +1,41 @@
+Layihə yazılan vaxt proqramlaşdırma prinsipləri nəzərə alınmalıdır ki,daha sonra layihənin hər hansı hissəsində(module/class/file/method…) edilən dəyişiklik digər hissələrinə ciddi problem yaratmasın.
+Texniki tapşırıqda sonradan nə isə dəyişdiriləndə və ya istəyə görə yeni funksionallıqlar əlavə ediləndə sistemimizdə dəyişiklik olan hissədəki update digər hissələrə minimal təsir etməlidir.
+1.YAGNI
+2.KISS
+3.SOLID
+4.DRY
+5.Delegate
+
+YAGNI: You Are’t Gonna Need It
+Çox vaxt keçmişdə lazım olduğu üçün yazdığımız amma indi işlətmədiyimiz code-u bəlkə gelecekde lazim olar deye silmirik.
+
+Bu prinsipin əsas məqsədi odurki,refactoring vaxtı hər hansı köhnə code parcasına (method/class/file/some logic) ehtiyyacımız yoxdursa onu silmekden çekinməməliyik.
+
+Əslində bu prinsip birazda uzaqgörənlik tələb edir.
+
+Çünki,əsas məqsədlərindən biridə odurki bir code hissəciyi yazılarkən yalnızca indi lazım olduğuna görə deyil gələcəkdə lazım olub olmayacağınıda nəzərə almalıyıq.
+
+Code-u silməkdən qorxma:) Ən pis halda git reposundan geri qaytara biləcəksən.
+KISS: Keep It Simple, Stupid (with other hand Keep It Super Simple)
+Albert Einstein said: “If you can’t explain it to a six year old, you don’t understand it well enough.”
+
+Burdakı əsas məqsəd code-un maximum sadə və en junior adamın belə başa düşəcəyi şəkildə yazılmasıdır.
+
+Biraz qəribə səslənsədə code-u oxuyacaq insanı ən stupid insan olaraq düşünüb ən sadə şəkildə yazmaq lazımdır.
+
+Enisteynində dediyi kimi : “Əgər sən birşeyi 6 yaşlı uşağa izah edə bilmirsənsə deməkki hələ onu özun kifayət qədər başa düşməmisən.”
+SOLID: stands for five principles
+Əsəs məqsədi anlaşılır,davam etdirilə və genişləndirilə bilən code yazmaqdır.
+
+Bu prinsipləri proyekt prototype mərhələsindən keçdikdən sonra tətbiq etmək lazımdır.Həmişə hər yerdə tetbiq etməliyik deyə bir şey yoxdur amma əgər tətbiq ediləcəksə mümkün qədər bütün prinsiplərin ödənməsi daha yaxşı hal sayılır.
+
+Aşağıdakı 5 əsas prinsipdən ibarətdir.
+SOLID ===>
+ Single Responsibility Principle
+ Hər bir method və ya class-ın yalnız bir məsuliyyəti olmalıdır. 1 class digərinin işini görməməlidir.
+
+Əks halda bu qaydaya uyğun yazılmamış method-da dəyişiklik edəndə istifadə edildiyi hər yerdə o dəyişikliyi tək-tək gözdən keçirməli oluruq.
+
+Component-lərin kiçik hissələr şəklində və 1 məqsədə xidmət edəcək şəkildə yazılışı kodun resuable olmasına və daha asan anlaşılmasına şərait yaradır.
+
+Spagetti code-un qarsısını almaq üçün çox vacib prinsiplərdən biridir.

@@ -1,0 +1,9 @@
+Əvvəlcə call-stack-in nə olduğunu anlayaq:
+
+Call Stack - function-ları izləyə bilmək üçün yaradılan bir konseptdir.
+
+“Invoked functions” — ın məlumatlarını saxlayır.
+“LIFO ”konsepti ilə işləyir(Last In First Out),yəni Call Stack-ə sonuncu daxil olan function birinci execute olur.
+JS “Single Thread” olduğu üçün eyni zaman kəsimində yalnız bir funksiya aktiv olur.Yəni,functions ardıcıl işə düşür paralel yox.
+Əlavə edilən hər element “Stack Frame” adlanır. Error baş verərkən ya da Debug edərkən istifadə etdiyimiz Stack-trace-lər hamsı Call Stack-dən gəlir.
+Stack isə variable-ların məlumatlarının (Primitive-dirsə ad və value,Non-Primitive-dirsə ad və address ozundə saxlayır)saxlandığı memory-dir.

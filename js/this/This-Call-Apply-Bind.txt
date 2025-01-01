@@ -1,0 +1,137 @@
+1.this ? => this, JavaScript-də xüsusi bir açar sözdür və o, cari kontekstdəki obyektə işarə edir.
+            Hansı obyektə işarə etdiyini kontekst (yəni thisin istifadə edildiyi yer) müəyyən edir.
+-Qlobal mühitdə (yəni, bir obyektin içində deyil) this, aşağıdakılara işarə edir: 
+ Brauzerlərdə: window obyektinə.
+ Node.js-də: global obyektinə.
+ console.log(this); // Brauzerdə: window, Node.js-də: global
+ function globalFunc() { console.log(this) } 
+ globalFunc(); // Brauzerdə: window, Node.js-də: global
+
+-Obyekt Daxilində this => Obyektin metodunda istifadə edildikdə, this həmin obyektə işarə edir.
+const user = {
+  name: "Ali",
+  greet: function () {
+    console.log(this.name); // `this` burada `user` obyektinə işarə edir.
+  },
+};
+user.greet(); // Çıxış: "Ali"
+
+-Konstruktor Funksiyalar və Class-lar.
+Konstruktor funksiyalarında və class içərisində this, yeni yaradılmış obyektə işarə edir.
+
+Konstruktor da 
+function Person(name) {
+  this.name = name; // `this`, yeni yaradılmış obyektə işarə edir.
+}
+
+const person1 = new Person("Ayşe");
+console.log(person1.name); // Çıxış: "Ayşe"
+
+class da
+class Car {
+  constructor(brand) {
+    this.brand = brand; // `this` yeni obyektə işarə edir.
+  }
+}
+
+const car1 = new Car("Toyota");
+console.log(car1.brand); // Çıxış: "Toyota"
+
+- Arrow Funksiyalarda this => this bağlandığı (lexical) mühitdən götürülür. 
+  Yəni, arrow funksiyalarında this dəyişmir və həmişə yaradıldığı kontekstə əsaslanır.
+
+const user = {
+  name: "Ali",
+  greet: function () {
+    const arrowFunc = () => {
+      console.log(this.name); // Arrow funksiyası `this`i `greet` metodundan götürür.
+    };
+    arrowFunc();
+  },
+};
+
+user.greet(); // Çıxış: "Ali"
+
+!!Hatirlatma
+const user = {
+  name: "Ali",
+  greet: function () {
+    function getName(){
+      console.log(this.name); // Arrow funksiyası `this`i `greet` metodundan götürür.
+    };
+    getName();
+  },
+};
+user.greet(); // Çıxış: "undefined"
+
+-Funksiya call, apply və bind ilə Çağırıldıqda
+call, apply, və bind JavaScript-də funksiya kontekstini dəyişdirmək və this-i əllə təyin etmək üçün istifadə olunan üç mühüm metodudur. 
+Bu metodlar, this-in dəyərini dəyişdirərək funksiyanı müəyyən bir obyektin kontekstində çağırmağa imkan verir.
+
+function introduce(greeting) { console.log(`${greeting}, mənim adım ${this.name}`) }
+const person = { name: "Emin" };
+
+introduce.call(person, "Salam"); // Çıxış: "Salam, mənim adım Emin"
+introduce.apply(person, ["Salam"]); // Çıxış: "Salam, mənim adım Emin"
+
+const boundFunc = introduce.bind(person);
+boundFunc("Salam"); // Çıxış: "Salam, mənim adım Emin"
+
+- Event Listeners və DOM Elementləri
+  DOM hadisə dinləyicilərində (event listeners) this dəyəri hadisənin tetiklədiyi DOM elementə işarə edir.
+
+  const button = document.querySelector("button");
+   button.addEventListener("click", function () {
+     console.log(this); // `this` burada düyməyə (`button`) işarə edir.
+   });
+
+  button.addEventListener("click", () => {
+   console.log(this); // `this` burada global obyektə (`window`) işarə edir.
+  });
+
+Hatirlatma!!!
+
+const user = {
+  name: "Ali",
+  greet: function () {
+    console.log(this.name);
+  },
+};
+
+const greetFunc = user.greet;
+greetFunc(); // undefined, çünki `this` artıq global obyektə işarə edir.
+Həlli: bind istifadə edin: => const boundFunc = user.greet.bind(user); -> boundFunc(); // Çıxış: "Ali"
+
+----------------------------------------------------------------------------------------------------------------------------------------
+2. call, aply ve bind
+call, apply, və bind JavaScript-də funksiya kontekstini dəyişdirmək və this-i əllə təyin etmək üçün istifadə olunan üç mühüm metodudur. 
+Bu metodlar, this-in dəyərini dəyişdirərək funksiyanı müəyyən bir obyektin kontekstində çağırmağa imkan verir. 
+Bu metodların hər biri oxşar məqsəd daşısa da, istifadə üsulları və funksionallıqları fərqlidir. Gəlin, bunları geniş şəkildə izah edək.
+
+call() metodu
+call() metodu, funksiyanı müəyyən bir obyektin kontekstində çağırmaq üçün istifadə olunur. 
+Bu metodla funksiyaya birbaşa this dəyəri təyin edilir. => func.call(thisArg, arg1, arg2, ...);
+thisArg: Funksiya çağırılarkən this dəyərinin olacağı obyekt. arg1, arg2, ...: Funksiyaya ötürüləcək arqumentlər.
+
+apply() metodu
+apply() metodu call()-a bənzərdir, amma bir fərqi var: apply() funksiyasına arqumentlər bir massiv (array) şəklində ötürülür.
+func.apply(thisArg, [arg1, arg2, ...]);
+thisArg: Funksiyaya tətbiq ediləcək this dəyəri.[arg1, arg2, ...]: Funksiyaya ötürüləcək arqumentlərin olduğu bir massiv.
+
+bind() metodu 
+call() və apply() kimi funksiyanı çağırmaq üçün istifadə olunur, amma bir fərqi var:
+bind() funksiyanı yeni bir funksiya olaraq qaytarır, lakin dərhal çağırılmır. Bu yeni funksiya sonradan çağırıldıqda, 
+həmin funksiya əvvəlcədən təyin olunmuş this dəyəri ilə işləyir
+const newFunc = func.bind(thisArg, arg1, arg2, ...);
+thisArg: Yeni funksiya üçün təyin ediləcək this dəyəri.
+[arg1, arg2, ...]: Funksiya ilə birlikdə təyin ediləcək başlanğıc arqumentlər.
+
+ex: function greet(greeting, punctuation, n=null) { console.log(`${greeting}, my name's ${this.name}${punctuation}`) }
+    const person = { name: "Foo"};
+
+    greet.call(person,"hi", "!");                                                    => hi my name's Foo !
+    greet.apply(person, ["hi", "!"]);                                                => hi my name's Foo !
+    const greetPerson = greet.bind(person, "hi", "!");   greetPerson()               => hi my name's Foo !
+    greetPerson("-");                                                                 => hi my name's Foo !-
+ 
+---------------------------------------------------------------------------------------------------------------------------------------------

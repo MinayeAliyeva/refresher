@@ -1,0 +1,33 @@
+Defer vs Async script loading
+Səhifənin loading performasına mənfi təsir etməmək üçün səhifəyə scripts-i yükləyəndə diqqətli olmaq lazımdır.
+
+İlk baxışdan çoxda vacib məsələyə bənzəmir amma scripts-in ölçüsü və sayı artdıqca priority məsələyə çevrilir.
+Bildiyimiz kimi script tag-ni həm <head> həm də <body> tanitmaq mümkündür.Head-də tanıdıldıqda body elements-i render edilməmiş scripts load olur.Ona görədə çox vaxt UI-a təsir eden scripts <head> ,digərləri <body> daxilində tanımlanır.
+Burdan gələcəyimiz nəticə odurki script tag-ni hansı sətirdə daxil etmişiksə həmin sətirdən sonrakı HTML kodlarımız script yuklənib bitənə qədər bloklanmış olur.
+
+Yəni,bu hallarda istifadəçi script-dən sonrakı elementləri səhifə açılan kimi görə bilmir.
+Blocking rendering
+
+Page rendering-in block olmasının qarşısını nisbətən almaq üçün script tag-in 2 boolean attribute-u istifadə edilir : defer və async.
+Defer: Best practice
+
+NOTE: Defer attribute-u yalnız external scripts üçündür.
+
+Browser ilk öncə DOM-u build edir
+js kodları səhifəyə backgroundda load olunur.
+DOM build olub bitəndən sonra scripts execute olur.
+Bir neçə script defer ilə yüklənərsə,scripts paralel load, ardıcıl execute olur.(səhifəyə tanıdılma ardıcıllığına görə execute olur)
+Hər iki script paralel load olunacaq.
+size-a görə birinci small.js ikinci long.js Load olunub bitəcək.
+sonda isə səhifəyə tanıdılma ardıcıllığına görə isə birinci long.js ikinci small.js Execute olacaq.
+sync: Defer ilə çox oxşardır.
+
+Əsas fərqi odur ki, nə scripts nə də DOM gözləmir digərini. Scripts DOM build olub bitmədən də execute ola bilər.
+
+Yuxarıdakı nümunədə defers-in yerinə async yazsaq nə olar?
+
+small.js birinci load olduğu üçün birinci execute olacaq,çünki artıq heçnə digərini gözləmir.
+Dynamic scripts behave as “async” by default.
+
+Dinamik scripts default async davranir. Çunki nə onlar heçnəyi,nə də heçnə onları gözləmir.
+NOTE: “defer”-ə dəyişmək mümkündür. async = false

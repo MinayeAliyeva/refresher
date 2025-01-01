@@ -1,0 +1,115 @@
+Kontekst, JavaScript-də bir funksiyanın və ya ifadənin hansı obyektə bağlı olduğunu, yəni this-in hansı obyektə istinad etdiyini müəyyən edir. Bu, bir funksiyanın hansı mühitdə çağırıldığına və ya işlədiyinə görə dəyişir.
+
+JavaScript-də kontekst, əsasən, obyektlər və funksiyalar daxilində işləyərkən qarşılaşılır.
+
+Kontekstin əsas xüsusiyyətləri:
+Funksiya çağırılma tərzinə görə dəyişir.
+
+Funksiyanın necə çağırıldığı, this-in hansı obyektə istinad edəcəyini təyin edir.
+Qlobal səviyyədə və obyekt daxilində fərqlənir.
+
+Qlobal səviyyədə kontekst window (browser) və ya global (Node.js) obyektinə işarə edir.
+Obyekt daxilində isə this, həmin obyektə işarə edir.
+Kontekst statik deyil.
+
+Bir funksiyanı bir obyektin daxilində çağırmaq və ya başqa bir obyektə bağlamaqla this dəyişdirilə bilər (call, apply, bind metodları vasitəsilə).
+Kontekstin növləri və izahı
+1. Qlobal Kontekst
+Qlobal səviyyədə kontekst həmişə window (brauzer) və ya global (Node.js) obyektinə işarə edir.
+
+javascript
+console.log(this); // Browser-də: window, Node.js-də: global
+2. Obyekt Konteksti
+Bir obyektin metodu çağırıldıqda, this həmin obyektə işarə edir.
+
+javascript
+const person = {
+  name: "Aygün",
+  greet: function(){
+    console.log(`Salam, mən ${this.name}.`);
+  },
+};
+
+
+
+person.greet(); // Salam, mən Aygün.
+Burada this, person obyektinə işarə edir, çünki greet metodu həmin obyektin daxilində çağırılır.
+
+3. Funksiya Konteksti
+Bir funksiya sadəcə çağırıldıqda, this qlobal obyektə (window və ya global) işarə edir. Strict mode (sərt rejimdə) isə this undefined olur.
+
+javascript
+function showThis() {
+  console.log(this);
+}
+
+showThis(); // Browser-də: window, Node.js-də: global
+
+"use strict";
+showThis(); // undefined
+
+4. Constructor Konteksti
+new operatoru ilə çağırılan funksiyada this, yaradılan yeni obyektə işarə edir.
+
+
+Copy code
+function Person(name) {
+  this.name = name;
+}
+
+const ali = new Person("Əli");
+console.log(ali.name); // Əli
+Burada this, ali obyektinə işarə edir.
+
+5. Explicit Kontekst (call, apply, bind)
+Bu metodlar funksiyanın this kontekstini dəyişməyə imkan verir.
+
+javascript
+const person = {
+  name: "Aygün",
+};
+
+function greet() {
+  console.log(`Salam, mən ${this.name}.`);
+}
+
+greet.call(person); // Salam, mən Aygün.
+Kontekstlə bağlı çətin hallar
+1. Callback funksiyalarda kontekst itkisi
+Bir metodu birbaşa obyektin xaricində istifadə etdikdə, this qlobal obyektə işarə edə bilər.
+
+javascript
+Copy code
+const person = {
+  name: "Aygün",
+  greet: function() {
+    console.log(this.name);
+  },
+};
+
+setTimeout(person.greet, 1000); // undefined
+Bu problem bind ilə həll edilir:
+
+javascript
+Copy code
+setTimeout(person.greet.bind(person), 1000); // Aygün
+Xülasə: Kontekst nədir?
+Kontekst bir funksiyanın və ya ifadənin işlədiyi mühitdir.
+O, this açar sözünün hansı obyektə istinad etdiyini müəyyən edir.
+Çağırış tərzinə və mühitə görə dəyişir:
+Qlobal səviyyədə: window və ya global
+Obyekt daxilində: Həmin obyekt
+Funksiya daxilində: Gözlənilən çağırışa əsaslanır
+Explicit metodlarla: İstifadəçi tərəfindən dəyişdirilə bilər
+Unutmayın: this həmişə funksiyanın necə çağırıldığı ilə bağlıdır, harada və necə tərif edildiyi ilə deyil!
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,212 @@
+Copy: Shallow (Dayaz) vs Deep (Dərin)
+JavaScript-də Shallow Copy və Deep Copy arasındakı fərq, obyektlərin (və ya array-lərin) referanslarının və onların dəyərlərinin yaddaşda necə idarə edilməsi ilə bağlıdır. Bu, xüsusilə Non-Primitive tiplərlə işləyərkən əhəmiyyətli olur.
+
+1. Shallow Copy (Dayaz Kopya)
+Nədir?
+Shallow Copy zamanı obyektin və ya array-in birinci səviyyədəki dəyərləri kopyalanır.
+Əgər obyektin daxilində başqa obyektlər və ya array-lər varsa, onların referansı surətlənir (kopyalanmır). Beləliklə, daxili obyektlər eyni Heap ünvanını paylaşır.
+Xüsusiyyətləri:
+Referans surətlənir: İkincil səviyyədəki obyektlər və array-lər yeni ünvan almır, köhnə Heap ünvanına işarə edir.
+Dəyişkənlik (Mutable): Daxili obyektlərdə edilən dəyişikliklər bütün referanslara təsir edir.
+Yaddaşa qənaət: Daha az yaddaş sərf olunur, çünki dərin surət yaradılmır.
+Misal:
+javascript
+Kodu kopyala
+let original = { name: "Alice", details: { age: 25, city: "Baku" } };
+let shallowCopy = { ...original }; // Shallow Copy
+
+shallowCopy.details.age = 30;
+
+console.log(original.details.age); // 30 (Daxili obyekt təsirləndi)
+console.log(shallowCopy.details.age); // 30
+Açıqlama:
+
+shallowCopy-də yalnız birinci səviyyədəki dəyərlər kopyalanır (name kimi).
+Daxili obyekt (details) eyni Heap ünvanını paylaşır. Ona görə də shallowCopy.details.age dəyişdirildikdə, original.details.age də dəyişir.
+Shallow Copy Yaradılma Yolları:
+Spread Operator: { ...obj }
+Object.assign(): Object.assign({}, obj)
+Arraylər üçün Slice: arr.slice()
+2. Deep Copy (Dərin Kopya)
+Nədir?
+Deep Copy zamanı obyekt və ya array-in bütün səviyyələrdəki dəyərləri (daxili obyektlər və array-lər daxil olmaqla) kopyalanır.
+Hər səviyyədə Heap-də yeni yaddaş sahəsi yaradılır, yəni tam müstəqil surət əldə edilir.
+Xüsusiyyətləri:
+Tam surət: Heç bir səviyyədə referans saxlanmır, hər şey yeni Heap ünvanında saxlanılır.
+Dəyişkənlik (Immutable): Obyektin bir surətində edilən dəyişikliklər digərinə təsir etmir.
+Yaddaş sərfiyyatı: Daha çox yaddaş tələb edir, çünki bütün obyektlər yenidən yaradılır.
+Misal:
+javascript
+Kodu kopyala
+let original = { name: "Alice", details: { age: 25, city: "Baku" } };
+
+// Deep Copy istifadə edirik
+let deepCopy = JSON.parse(JSON.stringify(original));
+
+deepCopy.details.age = 30;
+
+console.log(original.details.age); // 25 (Dəyişmədi)
+console.log(deepCopy.details.age); // 30
+Açıqlama:
+
+deepCopy zamanı JSON.parse(JSON.stringify(original)) metodu istifadə edərək obyektin tam surətini yaradıb yeni Heap sahəsinə yerləşdiririk.
+deepCopy.details.age dəyişdirildikdə, original.details.age-yə təsir etmir.
+Deep Copy Yaradılma Yolları:
+JSON.parse(JSON.stringify(obj): Sadə obyektlər üçün asan yoldur.
+Qeyri-Kafi: Function-lar, undefined, symbol dəyərləri kopyalanmır.
+Lodash Kütüphanəsi: _.cloneDeep(obj) (Ən etibarlı üsullardan biridir).
+Rekursiv Funksiya: Əl ilə bütün səviyyələri kopyalamaq üçün yazılır.
+Shallow vs Deep Copy Yaddaş Vizualizasiya
+Shallow Copy:
+javascript
+Kodu kopyala
+let original = { details: { age: 25 } };
+let shallowCopy = { ...original };
+
+// Yaddaş:
+Stack:
+original -> 0x1234
+shallowCopy -> 0x1234
+
+Heap:
+0x1234: { details: 0x5678 }
+0x5678: { age: 25 }
+original və shallowCopy eyni Heap ünvanına işarə edir.
+Deep Copy:
+javascript
+Kodu kopyala
+let original = { details: { age: 25 } };
+let deepCopy = JSON.parse(JSON.stringify(original));
+
+// Yaddaş:
+Stack:
+original -> 0x1234
+deepCopy -> 0x7890
+
+Heap:
+0x1234: { details: 0x5678 }
+0x5678: { age: 25 }
+
+0x7890: { details: 0x8901 }
+0x8901: { age: 25 }
+deepCopy üçün yeni Heap ünvanı yaradılıb, tam müstəqil obyekt əldə olunur.
+Shallow vs Deep Copy Cədvəli
+Xüsusiyyət	Shallow Copy	Deep Copy
+Yaddaşda saxlanma	Referanslar kopyalanır	Yeni Heap sahəsi yaradılır
+Dəyişiklik təsiri	Daxili obyektlər dəyişdirilə bilər	Tam müstəqil surət
+Yaddaş istifadəsi	Az yaddaş sərf olunur	Daha çox yaddaş tələb olunur
+Surətlənmə sürəti	Daha sürətli	Daha yavaş
+Metodlar	..., Object.assign()	JSON.parse(JSON.stringify()), rekursiv
+Nəticə
+Shallow Copy sadə surətləmə işləri üçün uyğundur və daxili obyektlərə dəyişiklik etməyəcəksinizsə istifadə edilə bilər.
+Deep Copy obyektin tam müstəqil surətinə ehtiyac olduqda istifadə edilir. Bu, xüsusilə kompleks və çox səviyyəli strukturlar üçün vacibdir.
+
+
+
+
+
+Şunu dedin:
+shallow copy nelerle edile biler deep nelerle
+ChatGPT:
+ChatGPT
+Shallow Copy (Dayaz Kopya) Yaratma Yolları
+Shallow copy etmək üçün müxtəlif üsullar mövcuddur. Bu metodlar yalnız birinci səviyyədəki dəyərləri kopyalayır, lakin daxili obyektlər və ya array-lər üçün referans saxlayır.
+
+1. Spread Operator (...)
+javascript
+Kodu kopyala
+const original = { name: "Alice", details: { age: 25 } };
+const shallowCopy = { ...original };
+
+shallowCopy.details.age = 30;
+console.log(original.details.age); // 30 (Referans paylaşılır)
+2. Object.assign()
+javascript
+Kodu kopyala
+const original = { name: "Alice", details: { age: 25 } };
+const shallowCopy = Object.assign({}, original);
+
+shallowCopy.details.age = 30;
+console.log(original.details.age); // 30
+3. Arraylər üçün slice()
+Array-lərdə dayaz surət yaratmaq üçün slice() metodu istifadə olunur.
+
+javascript
+Kodu kopyala
+const original = [1, 2, [3, 4]];
+const shallowCopy = original.slice();
+
+shallowCopy[2][0] = 99;
+console.log(original[2][0]); // 99
+4. Arraylər üçün concat()
+javascript
+Kodu kopyala
+const original = [1, 2, [3, 4]];
+const shallowCopy = original.concat();
+
+shallowCopy[2][0] = 99;
+console.log(original[2][0]); // 99
+5. Arraylər üçün Array.from()
+javascript
+Kodu kopyala
+const original = [1, 2, [3, 4]];
+const shallowCopy = Array.from(original);
+
+shallowCopy[2][0] = 99;
+console.log(original[2][0]); // 99
+Deep Copy (Dərin Kopya) Yaratma Yolları
+Deep copy daxili obyektlər və array-lər daxil olmaqla, obyektin tam surətini yaradır. Bunun üçün daha mürəkkəb metodlar istifadə olunur.
+
+1. JSON.parse(JSON.stringify())
+Bu üsul sadə obyektlər və array-lər üçün deep copy yaradır, lakin function, undefined, və symbol dəyərləri itirə bilər.
+
+javascript
+Kodu kopyala
+const original = { name: "Alice", details: { age: 25 } };
+const deepCopy = JSON.parse(JSON.stringify(original));
+
+deepCopy.details.age = 30;
+console.log(original.details.age); // 25 (Təsir etmir)
+2. Rekursiv Kopyalama
+Əl ilə rekursiv funksiya yazaraq obyektin bütün səviyyələrini kopyalaya bilərsiniz.
+
+javascript
+Kodu kopyala
+function deepCopy(obj) {
+  if (obj === null || typeof obj !== "object") return obj;
+
+  const copy = Array.isArray(obj) ? [] : {};
+
+  for (const key in obj) {
+    copy[key] = deepCopy(obj[key]);
+  }
+
+  return copy;
+}
+
+const original = { name: "Alice", details: { age: 25 } };
+const deepCopyObj = deepCopy(original);
+
+deepCopyObj.details.age = 30;
+console.log(original.details.age); // 25
+3. Lodash Kitabxanası: _.cloneDeep()
+Lodash kitabxanasının cloneDeep funksiyası ən etibarlı və geniş istifadə olunan deep copy üsullarından biridir.
+
+javascript
+Kodu kopyala
+const _ = require('lodash');
+const original = { name: "Alice", details: { age: 25 } };
+const deepCopy = _.cloneDeep(original);
+
+deepCopy.details.age = 30;
+console.log(original.details.age); // 25
+4. Strukturlaşdırılmış Yolla Klonlama (structuredClone())
+Modern JavaScript-də dərin kopyalama üçün yeni structuredClone metodu mövcuddur.
+
+javascript
+Kodu kopyala
+const original = { name: "Alice", details: { age: 25 } };
+const deepCopy = structuredClone(original);
+
+deepCopy.details.age = 30;
+console.log(original.details.age); // 25

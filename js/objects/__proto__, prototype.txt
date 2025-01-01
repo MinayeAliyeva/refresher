@@ -1,0 +1,46 @@
+Prototype
+
+Note: Prototype yalnız function obyektlərində mövcud olan xüsusi property-di.
+Function run olan vaxtı bu property avtomatik assign olunur function-lara.
+Təxminən hər object hansısa digər object ilə əlaqəli olur.Həmin əlaqə prototype vasitəsi ilə qurulur. Obyektlər parent obyektin method və property-lərini prototype vasitəsi ilə inherit edirlər.
+function Animal(name){
+this.name=name
+}
+
+Animal.prototype ==> {constructor:f,__proto__} prototype özü də ayrıca bir obyektdir və 2 property-si var: { 
+  constructor: ƒ Animal() 
+  __proto__: Object 
+}(funksiyanin ozundeki bu xususiyyet bir obyektdir hansi ki constructor ve __proto__ var daxilinde)
+const Dog=new Animal('foo')
+Dog obyekti yaradanda nə baş verir?
+Animal.prototype.constructorişə düşür və yeni object yaradılır.
+Yeni obyekt Dog dəyişəninə assign olunur.(Dog={})
+Dog-da __proto__ property-si yaranır hansı ki, parent.prototype-ı göstərir.
+(Dog.__proto__ === Animal.prototype)
+Function execute olunanda Animal-a avtomatik prototype property-si əlavə olunur.(function keyword ilə declare olunduğu üçün)
+yoxlamaq ucun Animal.hasOwnProperty('prototype') true
+What is [[Prototype]]? (Private)
+
+JS-in arxada işlətdiyi private obyektdir.(inaccessible to the developer) hansıki obyektin prototype-nı göstərir.
+What is __proto__? (Public)
+
+Hər bir object-də mütləq olan internal property-dir.
+
+[[Prototype]]-a birbaşa müraciət edə bilmədiyimiz üçün __proto__ property-sini istifadə edirik.
+__proto__ ya Object yada Null ola bilər.
+Normalda hər object Object-i inherit edir və ən başdakı obyekt yəni Object.prototype həmişə Null olur.Amma özümüzdə aşağıdakı yolla prototype-ı olmayan ,yəni, null olan object yarada bilərik.
+
+Object.create(null)
+NOTE: __proto__ -a birbaşa set etmək artıq məsləhət görülmür JS tərəfindən. (Doberman.__proto__ = Dog)
+Bunun evezine ==> 
+const Dog={color:'Black'}
+const Doberman={}
+Object.setPrototypeOf(Doberman,Dog)
+Object.getPrototypeO(Dog) // {color:'Black'}
+Doberman.__proto__=Object.getPrototypeOf(Dog)
+
+
+Yekun
+prototype yalnız funksiyalar və siniflər üçün mövcuddur.
+Object.prototype, Array.prototype, və s. kimi xüsusi prototiplər var.
+Adi obyektlər (məsələn, {}) prototype-ə sahib deyil, amma onların prototipi var (Object.prototype vasitəsilə).

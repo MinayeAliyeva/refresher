@@ -1,0 +1,17 @@
+1.First-Class Objects
+JavaScript-də funksiyalar dəyişənlər kimi istifadə edilə bilər:
+
+Dəyişənə təyin edilə bilər.
+Arqument kimi ötürülə bilər.
+Nəticə kimi qaytarıla bilər.
+const handler = () => console.log("This is a click handler function");
+document.addEventListener("click", handler);
+
+2.First-Order Functions
+First-order funksiyalar nə funksiyanı arqument kimi qəbul edir, nə də nəticə olaraq funksiya qaytarır. Onlar sadə işləri yerinə yetirir.
+Higher-Order Functions
+
+3.Higher-order funksiyalar digər funksiyaları arqument kimi qəbul edə və ya funksiya qaytara bilər.
+const higherOrder = (callback) => callback();
+higherOrder(() => console.log("Bu bir higher-order funksiyadır!"));
+// Çıxış: Bu bir higher-order funksiyadır!

@@ -1,0 +1,30 @@
+JavaScript Execution Context (İcra Konteksti)
+Execution Context JavaScript kodunun icrası zamanı yaradılan mühitdir. İcra prosesi iki əsas mərhələdən ibarətdir:
+1.Creation Phase (Yaradılma Mərhələsi)
+2.Execution Phase (İcra Mərhələsi)
+
+1.Creation Phase (Yaradılma Mərhələsi)==>
+Bu mərhələ kodun icrasından əvvəl baş verir və aşağıdakı addımlar həyata keçirilir:
+
+Global Object yaradılır:
+
+Brauzerdə bu, window obyektidir.
+Node.js-də isə global obyektidir.
+this Object yaradılır və Global Object-ə bağlanır.
+
+Memory Allocation (Yaddaşın Ayrılması):
+
+Function Declarations (Funksiya Bəyanları) tam olaraq yaddaşa yazılır (hoisting edilir).
+Variables (Dəyişənlər) yaddaşa yazılır, amma başlanğıcda undefined olaraq təyin edilir.
+2.Execution Phase (İcra Mərhələsi)===>Bu mərhələdə JavaScript mühərriki kodu sətir-sətir icra edir, dəyişənlərə dəyər təyin edir və funksiyaları çağırır.
+
+Function Execution Context (Funksiya İcra Konteksti)
+Funksiya çağırıldıqda ayrıca bir Execution Context yaradılır. Bu mühitdə:
+
+Arguments Object yaradılır: Funksiyaya ötürülən parametrləri əks etdirir.
+this Object təyin edilir (adətən global obyektə işarə edir).
+Parametrlər undefined olaraq təyin edilir və icra zamanı real dəyərlər alır.
+Call Stack (Zəng Yığını)
+Bütün Execution Context-lər (Global və Function) bir növ yığma mexanizm olan Call Stack tərəfindən idarə olunur. Hər yeni kontekst yaradıldıqda yığına əlavə olunur və bitdikdə çıxarılır.
+
+Bu qaydalar sayəsində JavaScript kodunun icra prosesi idarə edilir.

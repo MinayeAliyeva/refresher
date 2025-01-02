@@ -1,0 +1,81 @@
+Script Etiketləri və Fərqli Daxil Etmə Yolları
+JavaScript kodu bir səhifəyə daxil edərkən, onu fərqli yollarla daxil etmək mümkündür. Bu, HTML faylında istifadə olunan <script> etiketləri ilə edilir. Bu etiketlər JavaScript kodunu səhifəyə daxil etməyə imkan verir və bir neçə fərqli istifadə forması var.
+1. İnline (Sətir içi) JavaScript
+Bu üsulda JavaScript kodu birbaşa HTML sənədinin içində <script> etiketi arasında yazılır. Bu üsul, sadə və kiçik skriptlər üçün istifadə olunur.
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline JavaScript</title>
+</head>
+<body>
+    <h1>JavaScript ilə Yoxlama</h1>
+    <button onclick="alert('Salam, Dünya!')">Tıkla!</button>
+    <script>
+        console.log('Bu, inline JavaScript kodudur.');
+    </script>
+</body>
+</html>
+Yuxarıdakı nümunədə, JavaScript kodu birbaşa <script> etiketinin içindədir.
+
+
+2. External (Xarici) JavaScript
+Xarici JavaScript fayllarını istifadə etmək, kodunuzu daha nizamlı və təmiz saxlamağa imkan verir. Bu zaman JavaScript kodu ayrı bir fayl olaraq saxlanır və HTML sənədinə daxil edilir. Bu metod, xüsusilə böyük layihələrdə çox faydalıdır.
+JavaScript faylını yaradın: script.js
+
+console.log("Bu, xarici JavaScript faylıdır.");
+HTML sənədinə daxil edin:
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xarici JavaScript</title>
+</head>
+<body>
+    <h1>Xarici JavaScript Faylı</h1>
+    <button onclick="alert('Salam, Xarici JavaScript!')">Tıkla!</button>
+    <script src="script.js"></script>
+</body>
+</html>
+Bu nümunədə, script.js adlı xarici JavaScript faylı <script src="script.js"></script> etiketi ilə HTML sənədinə daxil edilir.
+
+ 3.Başlıqda və Sonra Daxil Etmə
+ JavaScript faylını HTML sənədinin <head> və ya <body> tagında daxil etmək olar. Hər iki metodun fərqli təsirləri və istifadələri var:
+
+<head>:
+JavaScript faylı başlıqda daxil edildikdə, səhifə yüklənməzdən əvvəl JavaScript icra olunur. Bu, JavaScript-ə ehtiyacı olan HTML elementləri hələ yüklənmədiyi üçün səhifənin gözlənilməz davranışlara səbəb olmasına səbəb ola bilər.
+<head>
+    <script src="script.js"></script>
+</head>
+<body>:
+JavaScript faylını səhifənin sonuna (</body> tagından əvvəl) daxil etmək daha yaygın bir tətbiqdir. Bu metod, səhifə yüklənərkən JavaScript-in yalnız HTML elementləri tamamilə yükləndikdən sonra işləməsini təmin edir, bu da səhifənin performansını artırır.
+html
+Kodu kopyala
+<body>
+    <script src="script.js"></script>
+</body>
+
+
+JavaScript faylını <body> tagında əlavə etdikdə, HTML-in tam yüklənməsi gözlənilir və sonra JavaScript icra olunur. Bu yanaşma, səhifənin görünüşünü təsir etmədən JavaScript-in işləməsinə imkan verir. Lakin, bəzi hallarda daha effektiv və sürətli bir yükləmə təmin etmək üçün defer və async atributları istifadə olunur.
+
+defer və async Atributlarının Fərqləri:
+1. defer Atributu:
+İstifadə edildikdə: JavaScript faylı, HTML sənədinin tamamilə yüklənməsini gözlədikdən sonra icra olunur.
+Təsiri: Bu atribut, JavaScript faylının yüklənməsini paralel olaraq həyata keçirir, yəni JavaScript faylı səhifə yüklənərkən paralel olaraq yüklənir, amma icra yalnız bütün HTML yükləndikdən sonra baş verir.
+Faydası: Bu, səhifənin HTML və CSS yüklənərkən JavaScript faylının paralel şəkildə yüklənməsinə imkan verir, amma JavaScript-in icrası səhifənin tamamilə yüklənməsindən sonra baş verir. Bu, səhifənin daha sürətli yüklənməsini təmin edir.
+<script src="script.js" defer></script>
+Bu kod, script.js faylını səhifənin sonunda yükləyəcək, amma paralel olaraq yüklənəcək. JavaScript faylının icrası isə bütün HTML yükləndikdən sonra olacaq.
+
+async Atributu:
+İstifadə edildikdə: JavaScript faylı asinxron olaraq yüklənir və dərhal yüklənəndən sonra icra olunur, səhifənin yüklənməsini gözləmədən.
+Təsiri: JavaScript faylı səhifə yüklənərkən paralel olaraq yüklənir və fayl yükləndikdən dərhal sonra icra olunur. Bu, səhifə yüklənərkən JavaScript faylının yüklənməsini təmin edir, amma fayl yükləndikdən sonra dərhal icra olunur, bu da səhifənin qalan hissəsinin daha gec yüklənməsinə səbəb ola bilər.
+Nə vaxt defer və nə vaxt async istifadə etməliyik?
+defer: Əgər JavaScript kodunuz səhifənin tam yüklənməsindən sonra icra olmalı və səhifənin digər elementləri ilə qarşılıqlı əlaqə qurmalıdırsa (məsələn, DOM manipulyasiyası), onda defer atributu istifadə edilməlidir.
+
+async: Əgər JavaScript kodu, səhifənin yüklənməsindən asılı olmayaraq dərhal icra olunmalı və digər səhifə elementləri ilə qarşılıqlı əlaqə qurmağa ehtiyac yoxdursa (məsələn, analitik skriptlər və ya reklam skriptləri), onda async atributu daha uyğun olar.
+defer: JavaScript faylının paralel olaraq yüklənməsi və HTML yükləndikdən sonra icra olunması üçün istifadə edilir.
+async: JavaScript faylının paralel olaraq yüklənməsi və yükləndiyi anda dərhal icra olunması üçün istifadə edilir.

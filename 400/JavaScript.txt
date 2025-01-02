@@ -1,0 +1,64 @@
+JavaScript nədir?
+JavaScript, veb səhifələrə dinamik və interaktiv xüsusiyyətlər əlavə etmək üçün yaradılmış proqramlaşdırma dilidir. Bu dil “saytları canlandırmaq” məqsədilə hazırlanmış və müasir veb inkişafının əsas elementlərindən birinə çevrilmişdir.
+JavaScript dilində yazılmış proqramlara “scripts” deyilir. Bu skriptlər HTML sənədinə daxil edilə bilər və səhifə yükləndikdən sonra avtomatik olaraq işləyir. Skriptlər adi mətn kimi təqdim edilir və xüsusi kompilyasiya tələb etmədən işləyir. Bu, JavaScript-i Java kimi dillərdən fərqləndirən əsas xüsusiyyətlərdən biridir.
+
+Kompilyasiya Prosesi Nədir?
+
+Kompilyasiya, mənbə kodunun (proqramçının yazdığı kodun) maşın dilinə çevrilməsi prosesidir. Bu proses nəticəsində çıxışda çalışdırıla bilən bir fayl (məsələn, .exe) əldə edilir.
+
+Kompilyasiya Dillərinə Misallar:
+
+C
+C++
+Java
+Necə İşləyir:
+
+Mənbə kod kompilyatora verilir.
+
+Kompilyator kodu analiz edərək maşın dilinə çevirir.
+
+Hazır fayl icra edilir.
+İnterpreted Dillər Nədir?
+İnterpreted dillər isə kodu əvvəlcədən çevirmək yerinə, sətir-sətir oxuyub icra edən dillərdir. Bu, proqram yazma və test etmə prosesini sürətləndirir.
+İnterpreted Dillərə Misallar:
+JavaScript
+Python
+
+PHP
+Necə İşləyir:
+
+Kod birbaşa tərcüməçiyə ötürülür.
+
+Tərcüməçi kodu oxuyub icra edir.
+
+Üstünlüklər:
+
+Dərhal geribildirim.
+
+Asan test və debug prosesi.
+
+Məhdudiyyətlər:
+
+Performans kompilyasiya dillərinə nisbətən daha zəifdir.
+
+Səhvlər yalnız runtime zamanı aşkarlanır.
+JavaScript yaradıldıqda, ilkin adı "LiveScript" idi. Lakin, o dövrdə Java çox populyar idi, buna görə də yeni dilin Java'nın "kiçik qardaşı" olaraq təqdim olunmasının faydalı olacağı qərara alındı.
+
+Amma JavaScript inkişaf etdikcə, tamamilə müstəqil bir dilə çevrildi və özünəməxsus spesifikasiyası olan ECMAScript ilə tərtib olundu və artıq Java ilə heç bir əlaqəsi yoxdur.
+
+Bu gün JavaScript yalnız brauzerdə deyil, həm də serverdə və ya xüsusi bir proqramın, JavaScript mühərrikinin olduğu hər hansı bir cihazda icra oluna bilir.
+
+Brauzer daxilində bəzən "JavaScript virtual maşını" adlanan bir mühərrik mövcuddur.
+
+Fərqli mühərriklərin müxtəlif "kod adları" var. Məsələn:
+
+V8 – Chrome, Opera və Edge-də.
+SpiderMonkey – Firefox-da. ... Digər kod adları isə Safari üçün "JavaScriptCore", Nitro, "SquirrelFish" və IE üçün "Chakra" kimi istifadə olunur.
+Mühərriklər necə işləyir?
+
+Mühərriklər mürəkkəbdir, amma əsasları sadədir.
+
+Mühərrik (əgər brauzerdədirsə, daxil edilmiş olur) skripti oxuyur ("parsing" edir).
+Sonra skripti maşın koduna çevirir ("kompilyasiya edir").
+Və sonra maşın kodu işləyir, olduqca sürətli.
+Mühərrik hər bir mərhələdə optimallaşdırmalar tətbiq edir. Hətta kompilyasiya edilmiş skripti işlədiyi zaman izləyir, içərisində axan verilənləri analiz edir və bu məlumatlara əsaslanaraq maşın kodunu daha da optimallaşdırır.

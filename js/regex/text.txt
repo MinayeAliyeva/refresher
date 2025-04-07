@@ -1,0 +1,109 @@
+1. (/^[a-zA-Z0-9_]+$/).test(str) – bu nə edir?
+Bu ifadə yoxlayır ki, sətirdə yalnız aşağıdakılar var, yoxsa yox:
+
+İngilis hərfləri (böyük və kiçik)
+
+Rəqəmlər (0–9)
+
+Alt xətt _
+
+Sadə sözlə: bu yoxlayır ki, str dəyişəni təkcə bu simvollardan ibarətdir və boş deyil.
+
+İndi isə hissə-hissə:
+^ → Bu, sətirin başını göstərir. Yəni uyğunluq ən başdan başlamalıdır.
+
+[a-zA-Z0-9_] → Bu, icazə verilən simvollar siyahısıdır.
+
+a-z → kiçik hərflər
+
+A-Z → böyük hərflər
+
+0-9 → rəqəmlər
+
+_ → alt xətt
+
++ → “bir və ya daha çox” simvol tələb edir. Yəni boş string ("") uyğun gəlməz.
+
+$ → bu sətirin sonunu bildirir. Yəni sətir tam olaraq bu simvollardan ibarət olmalıdır.
+
+✅ Doğru nümunələr:
+"hello123" → OK
+"Test_1" → OK
+
+❌ Yanlış nümunələr:
+"hello!" → ! icazəli deyil
+" " (boşluq) → icazəli deyil
+"" (boş sətir) → icazəli deyil, çünki + azı bir simvol istəyir
+
+2. (/^[a-zA-Z]\w{2,23}[a-zA-Z\d]$/) – bu nə edir?
+Bu istifadəçi adlarını (username) yoxlamaq üçün daha mürəkkəb bir Regex-dir. Gəlin sadə başa salım:
+
+Sətir necə olmalıdır?
+İlk simvol: mütləq hərf
+
+Ortadakı simvollar: istənilən hərf, rəqəm və ya alt xətt, amma 2–23 arası uzunluqda
+
+Son simvol: mütləq hərf və ya rəqəm (alt xətt olmasın)
+
+Ümumilikdə uzunluq: ən azı 4, ən çoxu 25 simvol
+
+Hissə-hissə:
+^ → Başlanğıc
+
+[a-zA-Z] → İlk simvol mütləq hərf olmalıdır
+
+\w{2,23} →
+
+\w = hərf + rəqəm + alt xətt
+
+{2,23} → bu simvolların sayı 2-dən 23-ə qədər ola bilər
+
+[a-zA-Z\d] → Sonda hərf və ya rəqəm olmalıdır (alt xətt olmaz)
+
+$ → Son
+
+3. /a.{3}b/ və /b.{3}a/ – bunlar nə edir?
+Bu ifadələr belə deyir:
+
+a → birinci simvol mütləq a
+
+.{3} → sonra istənilən 3 simvol
+
+b → və sonunda b olmalıdır
+
+Məsələn:
+
+"a123b" → uyğun gəlir
+
+"a...b" → uyğun gəlir
+
+"ab" → uyğun gəlmir (çünki 3 simvol yoxdur arada)
+
+Eyni şey /b.{3}a/ üçün də keçərlidir, sadəcə əvvəl b, sonra a gəlməlidir.
+
+4. search() və match() fərqi
+
+let str = "Salam, dünya! dünya dünya";
+let result = str.match(/dünya/g);
+console.log(result); // ["dünya", "dünya", "dünya"]
+✅ match() → uyğun gələn bütün sözləri bir massiv kimi qaytarır.
+let str = "Salam, dünya!";
+
+let result = str.search(/dünya/);
+console.log(result); // 7
+
+✅ search() → ilk tapdığı uyğunluğun indeksini (yerini) qaytarır.
+
+5. /[\W_]/g nə edir?
+Bu ifadə:
+
+\W → söz olmayan simvolları tapır. Yəni a-z, 0-9, və _ xaric olan hər şey.
+
+Amma \W alt xətti daxil etmir.
+
+Ona görə də [\W_] yazılıb ki, həm \W, həm də _ daxil olsun
+
+g → “global” – bütün uyğun gələnləri tapır
+
+✅ Yəni bu RegEx söz olmayan və alt xətt daxil olmaqla bütün simvolları tapır.
+

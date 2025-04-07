@@ -1,0 +1,48 @@
+Zibil yığımı (Garbage collection)
+JavaScript-də yaddaşın idarə olunması avtomatik və bizim üçün görünməyən şəkildə həyata keçirilir. Biz primitivlər, obyektlər, funksiyalar yaradırıq… Bunların hamısı yaddaş tələb edir.
+
+Bəs bir şey artıq lazım olmadıqda nə baş verir? JavaScript mühərriki bunu necə aşkar edir və yaddaşı necə təmizləyir?
+Təmizləmə (Clean it up)
+
+Əlçatanlıq (Reachability)
+JavaScript-də yaddaşın idarə olunmasının əsas anlayışı əlçatanlıqdır.
+
+Sadə desək, "əlçatan" dəyərlər, bir şəkildə əldə edilə bilən və ya istifadə oluna bilənlərdir. Bunlar yaddaşda saxlanılacağına zəmanət verilir.
+
+Əlbəttə ki, silinməyəcək bir baza əlçatan dəyərlər toplusu mövcuddur:
+
+Məsələn:
+
+Hal-hazırda icra olunan funksiya, onun yerli dəyişənləri və parametrikləri.
+
+Cari çağırış zəncirindəki digər funksiyalar, onların yerli dəyişənləri və parametrikləri.
+
+Qlobal dəyişənlər. (Bundan başqa, bəzi daxili dəyişənlər də mövcuddur.)
+
+Bu dəyərlərə "kök" (roots) deyilir.
+
+Hər hansı bir başqa dəyər, əgər o, bir kökdən istinad və ya istinadlar zənciri vasitəsilə əldə edilə bilirsə, əlçatan sayılır.
+
+Məsələn, əgər bir qlobal dəyişəndə obyekt varsa və həmin obyektin başqa bir obyekti istinad edən bir xüsusiyyəti varsa, o obyekt əlçatan sayılır. Və onun istinad etdiyi obyektlər də əlçatan sayılır. Ətraflı nümunələr veriləcək.
+
+JavaScript mühərrikində "zibil yığımı" (garbage collector) adlı bir fonksiyon var. O, bütün obyektləri izləyir və əlçatan olmayanları təmizləyir.
+
+Nümunə 1:
+Əgər qlobal bir dəyişəndə bir obyekt varsa və həmin obyektin içində başqa bir obyekti istinad edən bir xüsusiyyət varsa, hər iki obyekt əlçatan sayılır.
+
+javascript
+Copy
+let obj1 = { prop: { name: "Object 2" } };
+let obj2 = obj1.prop; // obj2 is now a reference to obj1.prop
+Bu halda, obj1 və obj2 əlçatan olur, çünki obj1 qlobal dəyişəndədir və obj2 ona istinad edir.
+
+Nümunə 2:
+Əgər bir obyekt artıq heç bir dəyişən tərəfindən istinad edilmirsə, o zaman bu obyekt əlçatan sayılmır və "garbage collector" tərəfindən təmizlənir.
+
+javascript
+Copy
+let obj = { name: "Object 3" };
+obj = null; // The object is no longer referenced and will be garbage collected
+Bu halda, obj artıq heç bir obyektə istinad etmədiyi üçün zibil yığımı tərəfindən təmizlənəcəkdir.
+
+Bir obyektin silinmesi ucun hemin obyekt hem null olmalidi hemde isdinad olmamalidi ona.

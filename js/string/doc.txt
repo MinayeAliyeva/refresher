@@ -1,0 +1,160 @@
+JavaScript-də stringlər hər zaman dəyişməz (immutable) olur, yəni bir dəfə yaradıldıqdan sonra dəyişdirilə bilməz.
+
+ Bu o deməkdir ki, string dəyişdikdə, əslində yeni bir string yaradılır və köhnə string dəyişməz qalır.
+ String yaratmanın bir neçə üsulu var:Double Quotes (" "), Backticks (Template literals) - ` `
+
+String Yaranma Üsulları:
+Direct Initialization (Birbaşa təyin etmə):
+
+let text = "Hello, World!";
+
+String Constructor (String konstruktoru ilə):
+let text = new String("Hello, World!"); // Ancaq bu metod istifadə edilməməlidir, çünki obyekt yaradır.
+
+
+String Concatenation: İki və ya daha çox stringi birləşdirmək üçün + operatoru istifadə edilir.
+
+let greeting = "Salam";
+let name = "Artur";
+let message = greeting + " " + name; // "Salam Artur"
+
+
+String.fromCharCode(): Verilən kod nömrələrini istifadə edərək string yaradır.
+let str = String.fromCharCode(72, 101, 108, 108, 111); // "Hello"
+
+
+JavaScript-də String Metodları və Dövrlər
+
+1. String Metodları
+charAt(index) – Verilən indeksdəki simvolu qaytarır.
+let name = "Minaye";
+console.log(name.charAt(1)); // "i"
+
+
+charCodeAt(index) – Verilən indeksdəki simvolun Unicode dəyərini qaytarır.
+console.log("A".charCodeAt(0)); // 65
+
+toUpperCase() – Bütün hərfləri böyük edir.
+console.log("hello".toUpperCase()); // "HELLO"
+
+toLowerCase() – Bütün hərfləri kiçik edir.
+console.log("HELLO".toLowerCase()); // "hello"
+
+trim() – Baş və sondakı boşluqları silir.
+console.log("  hello  ".trim()); // "hello"
+
+replace(oldValue, newValue) – Verilmiş dəyəri yenisi ilə əvəz edir.
+console.log("Hello world".replace("world", "JavaScript")); // "Hello JavaScript"
+
+replaceAll(oldValue, newValue) – Bütün uyğun gələnləri dəyişdirir.
+console.log("apple apple".replaceAll("apple", "orange")); // "orange orange"
+
+split(separator) – String-i müəyyən ayrıc ilə bölərək array qaytarır.
+console.log("a,b,c".split(",")); // ["a", "b", "c"]
+
+join(separator) – Array elementlərini string şəklində birləşdirir.
+console.log(["a", "b", "c"].join("-")); // "a-b-c"
+
+indexOf(value) – Verilmiş dəyərin ilk indeksini qaytarır.
+console.log("JavaScript".indexOf("S")); // 4
+
+lastIndexOf(value) – Verilmiş dəyərin son indeksini qaytarır.
+console.log("hello world world".lastIndexOf("world")); // 12
+
+includes(value) – Dəyərin string daxilində olub-olmadığını yoxlayır.
+console.log("Hello world".includes("world")); // true
+
+startsWith(value) – String-in müəyyən ifadə ilə başlayıb-başlamadığını yoxlayır.
+console.log("JavaScript is great".startsWith("JavaScript")); // true
+
+endsWith(value) – String-in müəyyən ifadə ilə bitib-bitmədiyini yoxlayır.
+console.log("Hello world".endsWith("world")); // true
+
+slice(start, end) – Verilmiş indekslər arasındakı hissəni qaytarır.
+console.log("JavaScript".slice(0, 4)); // "Java"
+
+substring(start, end) – slice kimi işləyir, ancaq mənfi indeks qəbul etmir.
+console.log("JavaScript".substring(0, 4)); // "Java"
+
+
+repeat(n) – Mətni n dəfə təkrarlayır.
+console.log("Hi!".repeat(3)); // "Hi!Hi!Hi!"
+
+padStart(length, char) – String-in əvvəlini müəyyən simvolla doldurur.
+console.log("5".padStart(3, "0")); // "005"
+
+padEnd(length, char) – String-in sonunu müəyyən simvolla doldurur.
+console.log("5".padEnd(3, "0")); // "500"
+
+concat(str1, str2, ...) – Verilmiş string-ləri birləşdirir.
+let str1 = "Hello";
+let str2 = "World";
+console.log(str1.concat(" ", str2)); // "Hello World"
+
+match(regex) – Müəyyən bir regEx ifadəsi ilə uyğunluq axtarır və uyğunluqları array şəklində qaytarır.
+let text = "The rain in Spain stays mainly in the plain";
+console.log(text.match(/ain/g)); // ["ain", "ain", "ain"]
+console.log(text.match(/ain/)); // ["ain"]
+
+matchAll(regex) – Bütün uyğunluqları iterator kimi qaytarır.
+let text = "test1 test2 test3";
+let regex = /test\d/g;
+let matches = text.matchAll(regex);
+for (let match of matches) {
+    console.log(match[0]); // "test1", "test2", "test3"
+}
+
+search(regex) – Verilən regEx ifadəsinə uyğun gələn ilk indeksin yerini qaytarır.
+let text = "Hello world!";
+console.log(text.search("world")); // 6
+
+localeCompare(str) – İki string-i müqayisə edərək mənfi, sıfır və ya müsbət dəyər qaytarır.
+console.log("apple".localeCompare("banana")); // -1 (çünki "apple" "banana"-dan əvvəl gəlir);
+
+normalize() – Unicode normalizasiyası üçün istifadə olunur (məsələn, aksentləri aradan qaldırmaq üçün).
+let text = "e\u0301"; // "é"
+console.log(text.normalize("NFC")); // "é"
+
+toString() – String-ə çevirmək üçün istifadə olunur.
+let num = 123;
+console.log(num.toString()); // "123"
+
+valueOf() – String-in primitiv dəyərini qaytarır.
+let text = new String("Hello");
+console.log(text.valueOf()); // "Hello"
+
+
+2. Dövrlər ilə String üzərində iterasiya
+for dövrü – Əgər indekslər lazımdırsa və dəyişən uzunluqlu string üzərində işləyirsinizsə.
+
+let text = "JavaScript";
+for (let i = 0; i < text.length; i++) {
+    console.log(text[i]);
+}
+
+for...of dövrü – Ən sadə və oxunaqlı yanaşmadır.
+for (let char of "JavaScript") {
+    console.log(char);
+}
+array- forEachde break ve continue isledilmiir !!!! 
+
+forEach() və map() metodları – Əgər string-də hərfləri dəyişmək və yeni massiv qaytarmaq istəyirsinizsə.
+"JavaScript".split("").forEach(char => console.log(char));
+
+
+
+let upperCaseArray = "JavaScript".split("").map(char => char.toUpperCase());
+console.log(upperCaseArray.join("")); // "JAVASCRIPT"
+
+while dövrü – Xüsusi şərtlər altında istifadə edilə bilər.
+let i = 0;
+let str = "JavaScript";
+while (i < str.length) {
+    console.log(str[i]);
+    i++;
+}
+
+for...in dövrü – Çox tövsiyə edilmir, çünki indekslər üzərindən işləyir.
+for (let index in "JavaScript") {
+    console.log(`Index: ${index}, Char: ${"JavaScript"[index]}`);
+}

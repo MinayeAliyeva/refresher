@@ -1,0 +1,82 @@
+
+1. RegEx Yaratmaq
+Literal üsulu: /pattern/
+const re = /ab+c/;
+
+
+Constructor üsulu: new RegExp(pattern)
+const re = new RegExp("ab+c");
+
+2. RegEx ilə String Metodları
+test() → Uyğunluq varsa true, yoxdursa false qaytarır.
+
+/hello/.test("hello world"); // true
+
+exec() → İlk uyğunluğu tapır və obyekt qaytarır.
+/world/.exec("hello world"); // ["world"]
+
+match() → Bütün uyğunluqları array kimi qaytarır.
+" ".match(//g); // ["", ""]
+
+
+matchAll() → Bütün uyğunluqları iterator kimi qaytarır.
+[..."apple apple".matchAll(/apple/g)];
+
+replace() → İlk uyğunluğu dəyişdirir.
+"I love ".replace(//, "Python"); // "I love Python"
+
+replaceAll() → Bütün uyğunluqları dəyişdirir.
+" ".replaceAll(//g, "Python"); // "Python Python"
+
+search() → İlk uyğunluğun indeksini qaytarır.
+"Hello ".search(//); // 6
+
+split() → String-i bölərək array qaytarır.
+"a,b,c".split(/,/); // ["a", "b", "c"]
+
+3. Əsas RegEx Simvolları
+. → İstənilən simvol
+/a.c/.test("abc"); // true
+
+^ → Sətirin başlanğıcında uyğunluq
+/^Hello/.test("Hello world"); // true
+
+$ → Sətirin sonunda uyğunluq
+/world$/.test("Hello world"); // true
+
+* → 0 və ya daha çox təkrarlanma
+/ab*c/.test("ac"); // true
+
++ → 1 və ya daha çox təkrarlanma
+/ab+c/.test("abc"); // true
+
+{n,m} → n-dən m-ə qədər təkrar
+/a{2,4}/.test("aaa"); // true
+
+\d → Rəqəm uyğunluğu
+/\d+/.test("123"); // true
+
+\w → Hərf, rəqəm və _ uyğunluğu
+/\w+/.test("word123"); // true
+
+4. Əsas RegEx Bayraqları
+g → Bütün uyğunluqları tapır
+"Hello Hello".match(/Hello/g); // ["Hello", "Hello"]
+
+i → Böyük-kiçik fərqinə baxmır
+/hello/i.test("Hello"); // true
+
+m → Çoxsətirli axtarış edir
+/^Hello/m.test("Hello\nworld"); // true
+
+s → . simvolunu yeni sətirlərə də tətbiq edir
+/hello.world/s.test("hello\nworld"); // true
+
+u → Unicode dəstəyi verir
+/\u{1F600}/u.test("😀"); // true
+
+
+
+
+
+

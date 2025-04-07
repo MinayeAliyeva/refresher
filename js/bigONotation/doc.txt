@@ -1,0 +1,88 @@
+Big O, bir alqoritmin nə qədər sürətli və ya yavaş işlədiyini göstərən ölçü vahididir. 
+Yəni, "bu kod böyük məlumatda nə qədər vaxt alacaq?" sualının cavabıdır.
+O(1) – Həmişə eyni vaxtda işləyən kod
+Nə qədər məlumat olsa da, kod saniyəsində bitir.
+
+
+function showFirstName(names) {
+  console.log(names[0]);
+}
+Bu funksiya yalnız ilk adı göstərir. 1 ad da olsa, 1 milyon ad da olsa — həmişə yalnız 1 əməliyyat edir.
+
+ O(n) – Məlumat artdıqca, vaxt da artır
+10 adam varsa 10 dəfə işləyir, 100 adam varsa 100 dəfə.
+
+
+function showAllNames(names) {
+  for (let i = 0; i < names.length; i++) {
+    console.log(names[i]);
+  }
+}
+
+O(n²) – Hər adam hər kəslə görüşür
+İç-içə iki döngü varsa, hər şey hər şeylə yoxlanır.
+
+
+function greetEachOther(names) {
+  for (let i = 0; i < names.length; i++) {
+    for (let j = 0; j < names.length; j++) {
+      console.log(names[i] + " says hi to " + names[j]);
+    }
+  }
+}
+Əgər 3 nəfər varsa:
+
+A → B, C
+
+B → A, C
+
+C → A, B
+və s. Yəni 3 x 3 = 9 əməliyyat.
+➡ Big O: O(n²)
+
+✅ O(log n) – Hər dəfə məlumatı yarıya bölmək
+Məsələn, bir siyahıda axtarış edirsən və hər dəfə ortadan baxırsan.
+
+
+function binarySearch(arr, target) {
+  let start = 0;
+  let end = arr.length - 1;
+
+  while (start <= end) {
+    let middle = Math.floor((start + end) / 2);
+
+    if (arr[middle] === target) return middle;
+
+    if (arr[middle] < target) {
+      start = middle + 1;
+    } else {
+      end = middle - 1;
+    }
+  }
+
+  return -1;
+}
+Əgər 1000 element varsa, sən maksimum 10-11 addımda axtardığını tapırsan.
+➡ Big O: O(log n)
+
+✅ O(2ⁿ) – Partlayıcı yavaşlıq
+Hər funksiya iki dəfə özünü çağırır. Bu çox sürətli şişir.
+
+
+function slowFibonacci(n) {
+  if (n <= 1) return n;
+  return slowFibonacci(n - 1) + slowFibonacci(n - 2);
+}
+Əgər n = 5 olsa, yüzlərlə çağırış olur. n = 50 olsa... kompüter ağlaya bilər 😅
+➡ Big O: O(2ⁿ)
+
+Sadə qayda:
+Tək döngü varsa → O(n)
+
+İki döngü iç-içə → O(n²)
+
+Yarıya bölmək → O(log n)
+
+Sabit əməliyyat → O(1)
+
+Rekursiya ilə çoxlu çağırış → O(2ⁿ)

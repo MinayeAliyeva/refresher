@@ -1,0 +1,377 @@
+OOP (Object-Oriented Programming) – proqramları obyektlərdən ibarət olan sistemlər kimi dizayn etməyə əsaslanır.
+Objeler-içerisinde birden fazla değeri depolayan yapılardır. Property olarak bilinen bu değerler primitive
+(String,number, boolean vb.) ve ya başka objeler olabilirler ve her bir değer string veya sembol ile isimlendirilebilir.
+Bir obyekt, real dünyadakı bir şeyi modelləşdirə biləcək bir məlumat strukturu kimi təsəvvür edilə bilər. 
+Ex: Bir avtomobilin obyekti: rəngi, markası və sürəti kimi xüsusiyyətləri ola bilər.
+
+Obyektlərin xüsusiyyətləri (Properties) Property = açar: dəyər formasında olur
+
+Objeler oluşturmanin yolları. Object literal, new Object keyword’ü , new Class keywordu, new Konustruktor Funuksia  
+Keywordu ve Object.create() fonksiyonuyla.
+
+1. Obyekt literal (literal) ilə yaratmaq => const user = { name: "John"}
+
+2. Object konstruktoru ilə yaratmaq => const user = new Object();  ->  user.name = "John"
+
+3. class vasitəsilə obyekt yaratmaq (ES6)
+class User {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+const user = new User("Samir", 28);
+
+4. Konustruktor Funuksialar
+function User(name, age) {
+    this.name = name;
+    this.age = age;
+}
+const user = new User("Samir", 28);
+
+5.Object.create => const user = Object.create({name: "John"});
+
+Dəyərlərin oxunması => Nöqtə sintaksisi ilə ve Künc mötərizə ilə => user.name , user["name"]
+Xüsusiyyətin silinməsi "delete" anahtar kelmesi ile => delete user.name
+
+Obyektin təkrarlanması və klonlanması
+const user = { name: "Vüqar", age: 35 };
+const clone = { ...user };
+const deepClone = JSON.parse(JSON.stringify(user));
+const copyObj = Object.assign({},user);
+const clonedObject = structuredClone(originalObject);
+
+1. Object.assign() Metodu ilə Klonlama
+Bu üsul Object.assign() metodundan istifadə edərək obyektin səthi klonunu (shallow copy) yaradır.
+Ex:
+const original = { name: "Ali", age: 25,address:{city: "baku"} };
+const clone = Object.assign({}, original);
+
+console.log(clone); // { name: "Ali", age: 25,address:{city: "baku"}}
+console.log(original); //{ name: "Ali", age: 25,address:{city: "baku"} }
+
+clone.age= 30;
+console.log(clone); // { name: "Ali", age: 30,info:{city: "baku"} }
+console.log(original); //{ name: "Ali", age: 25,address:{city: "baku"} }
+
+clone.address.city = "Gence";
+console.log(clone); // { name: "Ali", age: 30,address:{city: "Gence"} }
+console.log(original); //{ name: "Ali", age: 25,address:{city: "Gence"} }
+
+2. Spread Operator (...) ilə Klonlama
+ES6-dan etibarən ... spread operatorundan istifadə edərək obyektləri səthi klon etmək mümkündür.
+const original = { name: "Ali", age: 25,address:{city: "baku"} };
+const clone = {...original};
+
+console.log(clone); // { name: "Ali", age: 25,address:{city: "baku"}}
+console.log(original); //{ name: "Ali", age: 25,address:{city: "baku"} }
+
+clone.age= 30;
+console.log(clone); // { name: "Ali", age: 30, address:{city: "baku"} }
+console.log(original); //{ name: "Ali", age: 25,address:{city: "baku"} }
+
+clone.address.city = "Gence";
+console.log(clone); // { name: "Ali", age: 30,address:{city: "Gence"} }
+console.log(original); //{ name: "Ali", age: 25,address:{city: "Gence"} }
+
+3. JSON Metodları ilə Klonlama
+JSON.stringify() və JSON.parse() metodlarından istifadə edərək obyektin dərin klonunu yaratmaq mümkündür.
+Üstünlüklər:
+Dərin obyektlərin klonlanması üçün sadə üsuldur.
+Referans problemini həll edir.
+
+Çatışmazlıqlar:
+Dövrü obyektlərdə (circular references) səhvlərə səbəb olur.
+undefined, function, və Symbol tipli dəyərləri itirir.
+Dövrü (circular) obyektlərdə TypeError: Converting circular structure to JSON səhvi ilə nəticələnir.
+
+const original = {
+  name: "Nicat",
+  info:null,
+  adress: undefined,
+  sayHello: function () {
+    console.log("Hello!");
+  },
+  key3: Symbol("symbol"),
+};
+const clone = JSON.parse(JSON.stringify(original));
+
+console.log(clone); // { name: 'Nicat', info: null }
+
+original.obj ={name: "Obj"};
+const clone1 = JSON.parse(JSON.stringify(original));
+console.log(clone1); // { name: 'Nicat', info: null, obj:{name: "Obj"} }
+
+original.self = original;
+const clone2 = JSON.stringify(original)
+console.log(clone2); //Error: TypeError: Converting circular structure to JSON
+
+4.structuredClone nədir?
+structuredClone metodu verilən obyektin dərin klonunu yaradır və JSON metodlarının məhdudiyyətlərini aradan qaldırır:
+Dövrü obyektləri dəstəkləyir.
+undefined, Date, Map, Set, RegExp, ArrayBuffer və s. kimi strukturları düzgün şəkildə klonlayır.
+structuredClone metodu dövrü obyektləri dəstəkləyir və JSON metodlarındakı TypeError problemini həll edir.
+Məhdudiyyətləri:
+Funksiyaları klonlamır: structuredClone-da funksiyalar klonlanmır.
+Prototype məlumatlarını saxlamır: structuredClone-da yalnız obyektin özəllikləri klonlanır, prototip məlumatları itirilir.
+structuredClone metodunun daxili mexanizmi yalnız serializable (yəni serialize edilə bilən) məlumatlarla işləyir. 
+Lakin Symbol tipləri unikal və təkrarolunmaz olduğundan onların serializasiya edilərək klonlanması 
+texniki cəhətdən icazəli deyil.
+
+function deepClone(obj) {
+  if (obj === null || typeof obj !== "object") return obj;
+  const clone = Array.isArray(obj) ? [] : {};
+
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      clone[key] = deepClone(obj[key]); 
+    }
+  }
+
+  return clone;
+}
+
+// Test nümunəsi
+const original = {
+  name: "Aysel",
+  hobbies: ["kitab oxumaq", "səyahət"],
+  address: { city: "Bakı" },
+};
+
+const clone = deepClone(original);
+
+// Orijinalı dəyişdirmək
+clone.hobbies[0] = "idman";
+clone.address.city = "Şamaxı";
+
+// Test nəticələri
+console.log(original); 
+{
+  name: 'Aysel',
+  hobbies: [ 'kitab oxumaq', 'səyahət' ],
+  address: { city: 'Bakı' }
+}
+console.log(clone); 
+{
+  name: 'Aysel',
+  hobbies: [ 'idman', 'səyahət' ],
+  address: { city: 'Şamaxı' }
+}
+
+---------------------------------------------------------------------------------------------------------------------------
+*__Proto__ ve Prototype 
+--------------------------------------------------------------------------------
+Prototype -> Konustruktor Funuksialara method elave etmeye yarayir 
+
+function Animal(name){
+   this.name = name;
+   function getName(){ return this.name}
+}
+
+const obj = new Animal("dog");
+obj. getName() => error
+
+Helli !!!! 
+function Animal(name){
+   this.name = name;
+}
+Animal.prototype.getName=function(){ return this.name }
+const obj = new Animal("dog");
+obj.getName() //dog
+!!!hatirlatma 
+Animal.prototype.getName= () => { return this.name }
+const obj = new Animal("dog");
+obj.getName() //undefined -> arrow fn olduqu ichin
+----------------------------------------------------------------------------------
+
+Prototip(Prototype) — JavaScript-də obyektlərin irsiyyət qurmaq üçün istifadə etdiyi bir mexanizmdir.
+
+-> bütün obyektlər prototiplərdən istifadə edərək irsilik əldə edir.
+-> Prototiplər obyektlərə əlavə funksionallıq verməyə, yaxud ümumi xüsusiyyətləri paylaşmağa imkan yaradır.
+
+Prototiplər və [[Prototype]] Əlaqəsi
+Hər bir obyektin daxili olaraq başqa bir obyektlə əlaqəsi olur, bu əlaqə [[Prototype]] adlanır. 
+Bu daxili əlaqəyə ənənəvi olaraq __proto__ vasitəsilə giriş edilir.
+
+Prototip Nədir?
+Prototip, obyektlərin digər obyektlərdən xüsusiyyətlər və metodlar miras almasına imkan verən bir obyektdir.
+Bu əlaqə Prototip Zənciri (Prototype Chain) adlanan mexanizm vasitəsilə işləyir.
+
+obj.__proto__ və Object.getPrototypeOf(obj) => obyektin prototipinə birbaşa giriş üçün istifadə edilən xassədir.
+
+const parent = { greet: "Hello" };
+const child = Object.create(parent); // `parent` prototip olaraq təyin edilir.
+child.ad="Samir"
+
+console.log(Object.getPrototypeOf(child)); // parent
+console.log(child.__proto__); // parent
+
+-------------------hasOwnProperty | property in objName-----------------------------------------------------------
+hasOwnProperty => metodu obyektin özündə (yəni, prototipdə olmayan) bir xassənin olub-olmadığını yoxlayır.
+const parent = { greet: "Hello" };
+const child = Object.create(parent);
+child.name = "Alice";
+
+console.log(child.hasOwnProperty("name")); // true
+console.log(child.hasOwnProperty("greet")); // false (prototipdən gəlir)
+console.log("greate" in child); // false
+console.log("greet" in child.__proto__); // true
+
+-----------------Object.getOwnPropertyNames(objName) | Object.keys(objName);-----------------------------------------
+Object.getOwnPropertyNames(objName) = Object.keys(objName);=> [keyName1,keyName2,...,keyName6]
+const parent = { greet: "Hello" };
+const child = Object.create(parent); // `parent` prototip olaraq təyin edilir.
+child.ad="Samir"
+console.log(Object.getOwnPropertyNames(child)); // [ 'ad' ]
+console.log(Object.keys(child)); // [ 'ad' ]
+---------------------------------------------------------------------------------------------------------------------
+*!  Object.defineProperty(objName, propertyName,{value: "deyer"}) => writable, enumerable, configurable default false
+
+const obj = {};
+Object.defineProperty(obj, name, {value: "John"});
+console.log(obj) // {name: "John"}
+obj.name="Foo";
+console.log(obj) // {name: "John"}
+
+-> writable: true => o demekdir sen bu objectin name propertisini deyişdir ve ya guncelliye bilersen!(default false du)
+
+Object.defineProperty(obj, name, {value: "John", writable: true});
+obj.name="Foo";
+console.log(obj) // {name: "Foo"}
+
+-> enumerable: true => Object iterable olduqda yeni for in ile döngüye girdikde hemin properti gorsensinmi (default false du)
+Object.defineProperty(obj,sname, {value: "Johnov", enumerable: true});
+for(property in obj){
+   console.log(property); //sname -> name gorsenmiyecek default enumerable: false di name de
+} 
+
+-> configurable: true => hemin propertini objection sile bilerik false ise yox
+delete obj.name 
+console.log(obj) //{name: "John", sname: "Johnov"}
+
+Object.defineProperty(obj, name, {value: "John", writable: true, configurable: true});
+delete obj.name 
+console.log(obj) //{sname: "Johnov"}
+
+----------------------------------------------------------------------------------------------------------------------------
+Konstruktor Funksiyası ilə İrsiyyətin Qurulması
+
+Adım 1: Üst səviyyə (Parent) Konstruktorunu yaratmaq
+
+function Animal(name) { this.name = name }
+
+Animal.prototype.speak = function () { console.log(`${this.name} səslənir.`) };
+
+const dog = new Animal("dog") //dog seslenir
+const cat = new Animal("cat") //cat seslenir
+
+Bu, ümumi bir Animal konstruktordur. 
+Hər bir heyvanın adı (name) olacaq və bütün heyvanlar speak metodundan istifadə edə biləcək.
+
+Adım 2: Alt səviyyə (Child) Konstruktorunu yaratmaq
+Alt konstruktor yaratmaq üçün call metodundan istifadə edərək parent konstruktorunu çağırırıq. 
+Bu, this-i valideyn (parent) konstruktora bağlamağa imkan verir.
+
+ function Animal(name) {
+    this.name = name;
+ };
+
+ function Dog(name, breed) {
+    // Parent konstruktorun xüsusiyyətlərini miras al
+    Animal.call(this, name); // `this` Dog obyektini işarə edir. 
+    this.breed = breed;
+  }
+  
+  const dog = new Dog("Max", "Golden Retriever");
+  console.log(dog.name); // "Max"
+  console.log(dog.breed); // "Golden Retriever"
+
+
+Adım 3: Prototipi miras almaq
+Yeni Dog konstruktorunun Animal prototipini miras almasını təmin etmək üçün;
+Dog.prototype = Object.create(Animal.prototype); // Animal prototipini miras al
+Dog.prototype.constructor = Dog; // Dog obyektinə düzgün konstruktor bağla
+
+Object.create(Animal.prototype): Dog obyektinin prototipini Animal obyektinin prototipinə bağlayır, 
+yəni Dog obyektləri Animal metodlarını miras ala biləcək.
+
+Dog.prototype.constructor = Dog: Prototip zəncirini düzəldir və 
+Dog obyektlərinin konstruktorunun düzgün işləməsini təmin edir.
+
+------------------------------------------Example------------------------------------------------------
+function Animal(name) {
+    this.name = name;
+  }
+  
+  Animal.prototype.speak = function () {
+    console.log(`${this.name} səslənir.`);
+  };
+  
+  function Dog(name, breed) {
+    // Parent xüsusiyyətləri miras al
+    Animal.call(this, name);
+    this.breed = breed;
+  }
+  
+  // Prototipi miras al
+  Dog.prototype = Object.create(Animal.prototype);
+  Dog.prototype.constructor = Dog;
+  
+  // Dog-a özünə məxsus metod əlavə et
+  Dog.prototype.bark = function () {
+    console.log("Hav-hav!");
+  };
+  
+  const cat = new Animal("Kitty", "Persian");
+  cat.speak(); // Kitty səslənir.
+  console.log(cat.breed); // undefined
+  cat.bark(); // Error 
+
+  const myDog = new Dog("Rex", "Alman Çoban İti");
+  myDog.speak(); // Rex səslənir.
+  myDog.bark(); // Hav-hav!
+  console.log(myDog.breed); // Alman Çoban İti
+
+
+=> Animal dan yaranan objectler asaqidaki sekilde olacak ex: cat
+CAT => Animal {
+        name: "Cat"
+       [[prototype]] Object
+         speak: fn()
+       }
+=>Dog dan yaranan objectler asaqidaki sekilde olacak ex:dog
+DOG => Dog {
+          name: "Dog"
+          breed: "Alman iti"
+          [[Prototype]] Animal
+             bark: fn()
+             [[prototype]] Object
+               speak: fn()
+       }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
